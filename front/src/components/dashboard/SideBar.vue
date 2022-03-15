@@ -53,66 +53,6 @@ export default {
           name: "Travel",
           is_favorite: false,
           members: null
-        },
-        {
-          id: 7,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 8,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },{
-          id: 9,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 10,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 11,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 12,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },{
-          id: 3,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },{
-          id: 13,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },{
-          id: 14,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },{
-          id: 3,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },{
-          id: 15,
-          name: "Travel",
-          is_favorite: false,
-          members: null
         }
       ]
     }
@@ -161,7 +101,7 @@ export default {
         <div class="sidebar-line"></div>
 
         <div id="side-bar-header">
-          <router-link id="side-bar-title" :to="{ name: 'dashboard'}" active-class="side-bar-active-link">
+          <router-link id="side-bar-title" :to="{ name: 'dashboard'}" exact-active-class="side-bar-active-link">
             <div id="side-bar-title-img"><img src="../../assets/icon-document.svg" alt="Icon to do list"></div>
             <h1>My Todo Lists</h1>
           </router-link>
