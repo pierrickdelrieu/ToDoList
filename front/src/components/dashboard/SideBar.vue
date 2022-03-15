@@ -184,7 +184,7 @@ export default {
       </div>
 
       <div id="side-bar-footer">
-        <router-link id="side-bar-logout-btn" to="/login"><button @click="logout">Logout</button></router-link>
+        <router-link id="side-bar-logout-btn" to="/login"><div @click="logout">Logout</div></router-link>
 
         <div class="sidebar-line"></div>
 
