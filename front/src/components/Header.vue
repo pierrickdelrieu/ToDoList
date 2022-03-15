@@ -15,7 +15,11 @@
         <a href="/#contact">Contact</a>
       </div>
 
-      <router-link class="nav-login-register-button" to="/login">Login/Register</router-link>
+      <router-link class="nav-login-register-button" to="/login">
+      <div v-if='token'>Go to dashboard</div>
+      <div v-else >Login/Register</div>
+      </router-link>
+      
     </div>
 
     <div id="burger-menu-img">
@@ -43,7 +47,8 @@ export default {
   name: "Header",
   data () {
     return {
-      displayBurgerMenu: false
+      displayBurgerMenu: false,
+      token: null
     }
   },
   methods: {
@@ -59,6 +64,9 @@ export default {
         document.body.style = "overflow-y: unset;";
       }
     }
+  },
+  mounted() {
+      this.token = localStorage.getItem("token");
   }
 }
 </script>
