@@ -1,10 +1,10 @@
 <template>
     <div id="modal" @click.self="close">
         <div id="modal-content">
-            <img src="../../assets/close.svg" alt="Close modal icon" @click="close">
-            <template name="header" class="modal-item"></template>
-            <template name="content" class="modal-item">Empty PopUp</template>
-            <template name="footer" class="modal-item"></template>
+            <img id="modal-close-icon" src="../../assets/close.svg" alt="Close modal icon" @click="close">
+            <div class="modal-item"><slot name="header"></slot></div>
+            <div class="modal-item"><slot name="content">Empty PopUp</slot></div>
+            <div class="modal-item"><slot name="footer"></slot></div>
         </div>
     </div>
 </template>
@@ -31,17 +31,20 @@ export default {
         height: 100vh;
         background-color: rgba(237, 237, 237, 0.2);
         z-index: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #modal-content {
-        position: absolute;
-        left: 50%;
-        top: 30%;
-        transform: translate(-50%, -30%);
+        position: relative;
 
         z-index: 1;
         min-width: 200px;
         min-height: 10px;
+        width: fit-content;
+        /* height: min-content; */
 
         background-color: #FFFFFF;
         box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.25);
@@ -54,16 +57,12 @@ export default {
         padding: 20px;
     }
 
-    #modal-content > img {
+    #modal-close-icon {
         width: 24px;
         position: absolute;
         right: 10px;
         top: 10px;
 
         cursor: pointer;
-    }
-
-    .modal-item {
-        margin: 0 30px;
     }
 </style>

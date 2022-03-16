@@ -1,11 +1,14 @@
 <script>
 import DashboardContent from "@/components/dashboard/DashboardContent";
+import NewListModal from "@/components/modal/NewListModal";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Dashboard",
-  components: {DashboardContent},
+  components: {DashboardContent, NewListModal},
   data() {
     return {
+      isNewListModal: false,
       lists: [
         {
           id: 1,
@@ -42,51 +45,63 @@ export default {
     numberTotalOfList() {
       return this.lists.length
     }
-  }
+  },
+  methods: {
+    showModal() {
+      this.isNewListModal = true;
+    },
+    closeModal() {
+      this.isNewListModal = false;
+    }
+  },
 }
 </script>
 
 
 <template>
-  <DashboardContent>
-    <template v-slot:title>My ToDo lists</template>
+  <div>
+    <NewListModal v-show="isNewListModal" @close="closeModal"/>
 
-    <template v-slot:logo>
-      <img src="../assets/plus-circle.svg" alt="Plus circle">
-    </template>
+    <DashboardContent>
+      <template v-slot:title>My ToDo lists</template>
 
-    <template v-slot:info>
-      <div class="dashboard-content-header-info-item"><h1>Number of lists</h1><p>{{ numberTotalOfList }}</p></div>
-      <div class="dashboard-content-header-info-item"><h1>Number of tasks</h1><p>{{ numberTotalOfTask }}</p></div>
-    </template>
+      <template v-slot:logo>
+        <img src="../assets/plus-circle.svg" alt="Plus circle" @click="showModal" style="cursor: pointer;">
+      </template>
 
-    <template v-slot:main>
-      <table id="dashboard-table">
-        <tr id="dashboard-table-header">
-          <th>Name</th>
-          <th>Tasks</th>
-          <th>Members</th>
-          <th></th>
-        </tr>
-        <tr v-for="list in lists" :key="list.id" class="dashboard-table-row">
-          <td>
-            <router-link :to="{ name: 'list', params: { id: list.id }}" class="dashboard-table-row-name">
-              {{ list.name }}
-            </router-link></td>
-          <td>{{ list.number_of_task }}</td>
-          <td><div v-for="(member, index) in list.member" :key="index" class="dashboard-table-members">
-            <p>{{ member }}</p>
-          </div></td>
-          <td style="width: 130px">
-            <img v-if="list.is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked icon">
-            <img v-else src="../assets/favorite.svg" alt="Favorite icon">
-            <img src="../assets/share.svg" alt="Share icon">
-            <img src="../assets/bin.svg" alt="Delete icon ">
-          </td>
-        </tr>
-      </table>
-    </template>
-  </DashboardContent>
+      <template v-slot:info>
+        <div class="dashboard-content-header-info-item"><h1>Number of lists</h1><p>{{ numberTotalOfList }}</p></div>
+        <div class="dashboard-content-header-info-item"><h1>Number of tasks</h1><p>{{ numberTotalOfTask }}</p></div>
+      </template>
+
+      <template v-slot:main>
+        <table id="dashboard-table">
+          <tr id="dashboard-table-header">
+            <th>Name</th>
+            <th>Tasks</th>
+            <th>Members</th>
+            <th></th>
+          </tr>
+          <tr v-for="list in lists" :key="list.id" class="dashboard-table-row">
+            <td>
+              <router-link :to="{ name: 'list', params: { id: list.id }}" class="dashboard-table-row-name">
+                {{ list.name }}
+              </router-link></td>
+            <td>{{ list.number_of_task }}</td>
+            <td><div v-for="(member, index) in list.member" :key="index" class="dashboard-table-members">
+              <p>{{ member }}</p>
+            </div></td>
+            <td style="width: 130px">
+              <img v-if="list.is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked icon">
+              <img v-else src="../assets/favorite.svg" alt="Favorite icon">
+              <img src="../assets/share.svg" alt="Share icon">
+              <img src="../assets/bin.svg" alt="Delete icon ">
+            </td>
+          </tr>
+        </table>
+      </template>
+    </DashboardContent>
+  </div>
 </template>
 
 

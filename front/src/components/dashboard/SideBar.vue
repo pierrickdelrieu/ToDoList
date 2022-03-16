@@ -1,8 +1,11 @@
 <script>
+import NewListModal from "@/components/modal/NewListModal";
 export default {
+  components: { NewListModal },
   name: "SideBar",
   data() {
     return {
+      isNewListModal: false,
       displaySideBar: true,
       user: {
         firstname: "Pierrick",
@@ -79,6 +82,12 @@ export default {
     logout: function(){
       console.log("logout")
       this.$store.dispatch("logout")
+    },
+    showModal() {
+      this.isNewListModal = true;
+    },
+    closeModal() {
+      this.isNewListModal = false;
     }
   }
 }
@@ -86,8 +95,9 @@ export default {
 
 <template>
   <div>
-
   
+    <NewListModal v-show="isNewListModal" @close="closeModal"/>
+
     <div id="side-bar-burger-menu" @click="toggleSideBar">
       <img src="../../assets/burger-menu.png" alt="Burger menu">
     </div>
@@ -106,7 +116,7 @@ export default {
             <h1>My Todo Lists</h1>
           </router-link>
 
-          <img src="../../assets/plus-circle.svg" alt="Plus circle">
+          <img src="../../assets/plus-circle.svg" alt="Plus circle" @click="showModal">
         </div>
 
 
@@ -172,6 +182,8 @@ export default {
   #side-bar-logo {
     margin-bottom: 20px;
   }
+
+
   /* ******************** Header ******************** */
   #side-bar-close-burger-menu {
     display: none;
@@ -188,6 +200,7 @@ export default {
   }
   #side-bar-header > img {
     width: 20px;
+    cursor: pointer;
   }
   #side-bar-title {
     display: flex;
