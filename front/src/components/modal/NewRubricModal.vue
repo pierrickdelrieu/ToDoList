@@ -1,23 +1,15 @@
 <template>
   <Modal @close="close">
     <template v-slot:header>
-        <div id="newListModal-header">
-            <h1 id="newListModal-title">New list</h1>
-            <img src="../../assets/list.svg" alt="List icon"/>
+        <div id="newRubricModal-header">
+            <h1 id="newRubricModal-title">New Rubric</h1>
         </div>
     </template>
 
     <template v-slot:content>
-            <form id="newListModal-form" @submit.prevent="addList">
-                <div id="newListModal-form-field">
-                    <InputField label="Name" v-model="name" placeholder="List name" type="text" />
-                    <div id="newListModal-form-checkbox">
-                        <input type="checkbox" id="favoriteCheckbox" v-model="isFavorite"/>
-                        <label for="favoriteCheckbox"></label>
-                    </div>
-                </div>
-
-                <input type="submit" id="newListModal-submit" value="Create">
+            <form id="newRubricModal-form" @submit.prevent="addRubic">
+                <InputField label="Name" v-model="name" placeholder="Rubric name" type="text" /> 
+                <input type="submit" id="newRubricModal-submit" value="Create">
             </form>
     </template>
     
@@ -30,20 +22,18 @@ import Modal from "@/components/modal/Modal";
 import InputField from './InputFieldModal.vue';
 
 export default {
-    name: "NewListModal",
+    name: "NewRubricModal",
     components: { Modal, InputField },
     data() {
         return {
             name: "",
-            isFavorite: false
         }
     },
     methods: {
         close() {
             this.$emit("close")
         },
-        addList() {
-            console.log(this.isFavorite)
+        addRubic() {
         }
     },
 
@@ -51,7 +41,7 @@ export default {
 </script>
 
 <style>
-    #newListModal-header {
+    #newRubricModal-header {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -60,7 +50,7 @@ export default {
         margin-bottom: 30px;
     }
 
-    #newListModal-header > h1 {
+    #newRubricModal-header > h1 {
         margin: 0;
         font-weight: 500;
         font-size: 36px;
@@ -73,7 +63,7 @@ export default {
 
 
 
-    #newListModal-form {
+    #newRubricModal-form {
         width: 400px;
 
         display: flex;
@@ -82,14 +72,14 @@ export default {
         align-items: center;
     }
 
-    #newListModal-form-field {
+    #newRubricModal-form-field {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
     }
 
-    #newListModal-form-field > img {
+    #newRubricModal-form-field > img {
         width: 20px;
         cursor: pointer;
 
@@ -97,13 +87,13 @@ export default {
     }
 
     @media  screen and (max-width: 500px) {
-        #newListModal-form {
+        #newRubricModal-form {
             width: 70vw;
         }
     }
 
 
-    #newListModal-submit {
+    #newRubricModal-submit {
         margin-top: 20px;
 
         width: 120px;
@@ -125,21 +115,21 @@ export default {
         color: #FFFFFF;
     }
 
-    #newListModal-submit:hover{
+    #newRubricModal-submit:hover{
         background: rgba(242, 80, 25, 0.8);
     }
 
 
 
-    #newListModal-form-checkbox {
+    #newRubricModal-form-checkbox {
         margin-left: 30px;
     }
 
-    #newListModal-form-checkbox > input[type="checkbox"] {
+    #newRubricModal-form-checkbox > input[type="checkbox"] {
         display: none;
     }
 
-    #newListModal-form-checkbox > input + label {
+    #newRubricModal-form-checkbox > input + label {
         display: inline-block;	
         width: 20px;
         height: 20px;
@@ -148,7 +138,7 @@ export default {
         background-size: 100%;
     }
 
-    #newListModal-form-checkbox > input[type="checkbox"]:checked + label {
+    #newRubricModal-form-checkbox > input[type="checkbox"]:checked + label {
         background-image: url(../../assets/favorite_checked.svg);
         background-size: 100%;
     }

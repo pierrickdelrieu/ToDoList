@@ -3,15 +3,18 @@ import DashboardContent from "@/components/dashboard/DashboardContent";
 import KwRubric from "@/components/dashboard/KwRubric";
 import KwTask from "@/components/dashboard/KwTask";
 import Modal from "@/components/modal/Modal";
+import NewRubricModal from "@/components/modal/NewRubricModal";
+
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, Modal },
+  components: { KwTask, KwRubric, DashboardContent, Modal, NewRubricModal },
   props:['id'],
   data() {
     return {
-      isNewTaskModal : false,
+      isNewTaskModal: false,
+      isNewRubricModal: false,
 
       title: "Kanban Model",
       is_favorite: false,
@@ -92,11 +95,17 @@ export default {
     }
   },
   methods: {
-    showModal() {
+    showNewTaskModal() {
       this.isNewTaskModal = true;
     },
-    closeModal() {
+    closeNewTaskModal() {
       this.isNewTaskModal = false;
+    },
+    showNewRubricModal() {
+      this.isNewRubricModal = true;
+    },
+    closeNewRubricModal() {
+      this.isNewRubricModal = false;
     }
   },
 }
@@ -105,11 +114,17 @@ export default {
 
 <template>
   <div>
-    <Modal v-show="isNewTaskModal" @close="closeModal">
+    <Modal v-show="isNewTaskModal" @close="closeNewTaskModal">
       <template v-slot:header>dfd</template>
       <template v-slot:content>dfa</template>
       <template v-slot:footer>fdf</template>
     </Modal>
+
+
+    <NewRubricModal v-show="isNewRubricModal" @close="closeNewRubricModal"/>
+
+
+    
 
     
     <DashboardContent>
@@ -123,7 +138,7 @@ export default {
         <img v-if="is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked">
         <img v-else src="../assets/favorite.svg" alt="Favorite checked">
         <img src="../assets/share.svg" alt="Share icon">
-        <img src="../assets/plus-circle.svg" alt="Plus circle">
+        <img src="../assets/plus-circle.svg" alt="Plus circle" @click="showNewRubricModal" style="cursor: pointer;">
       </template>
 
       <template v-slot:info>
@@ -134,7 +149,7 @@ export default {
       </template>
 
       <template v-slot:main>
-        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="showModal">
+        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="showNewTaskModal">
           <template v-slot:tasks>
             <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task"/>
           </template>
