@@ -1,10 +1,6 @@
 <script>
 export default {
   name: "KwRubric",
-  data() {
-    return {
-    }
-  },
   props: {
     title: {
       type: String,
@@ -18,6 +14,11 @@ export default {
         id: 1
       }
     ]
+  },
+  methods: {
+    showNewTaskModal() {
+      this.$emit("showNewTaskModal")
+    }
   },
   computed: {
     numberOfTask() {
@@ -33,10 +34,12 @@ export default {
 
 <template>
   <div class="kw-rubric">
+    
+
     <div class="kw-rubric-header">
       <h1>{{ title }}</h1>
 <!--      <p>{{ numberOfTask }}</p>-->
-      <img src="../../assets/plus-circle-grey.svg" alt="Plus circle">
+      <img src="../../assets/plus-circle-grey.svg" alt="Plus circle" @click="showNewTaskModal">
     </div>
     <div class="kw-rubric-tasks">
       <slot name="tasks"></slot>
@@ -70,11 +73,13 @@ export default {
   }
   .kw-rubric-header > img {
     width: 24px;
+    cursor: pointer;
   }
-  .kw-rubric-header > img:hover {
-    /*mask: url("../../assets/plus-circle.svg");*/
+  /* .kw-rubric-header > img:hover {
+    mask: url("../../assets/plus-circle.svg");
     filter: invert(200%);
-  }
+    fill-opacity: aqua;
+  } */
   .kw-rubric-tasks {
     display: flex;
     flex-direction: column;

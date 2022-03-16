@@ -2,13 +2,17 @@
 import DashboardContent from "@/components/dashboard/DashboardContent";
 import KwRubric from "@/components/dashboard/KwRubric";
 import KwTask from "@/components/dashboard/KwTask";
+import Modal from "@/components/modal/Modal";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: {KwTask, KwRubric, DashboardContent},
+  components: { KwTask, KwRubric, DashboardContent, Modal },
   props:['id'],
   data() {
     return {
+      isNewTaskModal : false,
+
       title: "Kanban Model",
       is_favorite: false,
       members: ["Pierrick", "Meric", "Kais", "Guillaume"],
@@ -86,37 +90,58 @@ export default {
       })
       return sum
     }
-  }
+  },
+  methods: {
+    showModal() {
+      this.isNewTaskModal = true;
+    },
+    closeModal() {
+      this.isNewTaskModal = false;
+    }
+  },
 }
 </script>
 
 
 <template>
-  <DashboardContent>
-    <template v-slot:title>{{ title }} {{ id }}</template>
+  <div>
+    <Modal v-show="isNewTaskModal" @close="closeModal">
+      <template v-slot:header>dfd</template>
+      <template v-slot:content>dfa</template>
+      <template v-slot:footer>fdf</template>
+    </Modal>
 
-    <template v-slot:logo>
-      <img v-if="is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked">
-      <img v-else src="../assets/favorite.svg" alt="Favorite checked">
-      <img src="../assets/share.svg" alt="Share icon">
-      <img src="../assets/plus-circle.svg" alt="Plus circle">
-    </template>
+    
+    <DashboardContent>
+      <template v-slot:modal>
+        
+      </template>
 
-    <template v-slot:info>
-      <div class="dashboard-content-header-info-item"><h1>Number of tasks</h1><p>{{ numberOfTask }}</p></div>
-      <div class="dashboard-content-header-info-item"><h1>Participants</h1>
-        <p v-for="(member, index) in members" :key="index" style="margin: 0 4px">{{ member }}</p>
-      </div>
-    </template>
+      <template v-slot:title>{{ title }} {{ id }}</template>
 
-    <template v-slot:main>
-      <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name">
-        <template v-slot:tasks>
-          <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task"/>
-        </template>
-      </KwRubric>
-    </template>
-  </DashboardContent>
+      <template v-slot:logo>
+        <img v-if="is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked">
+        <img v-else src="../assets/favorite.svg" alt="Favorite checked">
+        <img src="../assets/share.svg" alt="Share icon">
+        <img src="../assets/plus-circle.svg" alt="Plus circle">
+      </template>
+
+      <template v-slot:info>
+        <div class="dashboard-content-header-info-item"><h1>Number of tasks</h1><p>{{ numberOfTask }}</p></div>
+        <div class="dashboard-content-header-info-item"><h1>Participants</h1>
+          <p v-for="(member, index) in members" :key="index" style="margin: 0 4px">{{ member }}</p>
+        </div>
+      </template>
+
+      <template v-slot:main>
+        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="showModal">
+          <template v-slot:tasks>
+            <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task"/>
+          </template>
+        </KwRubric>
+      </template>
+    </DashboardContent>
+  </div>
 </template>
 
 

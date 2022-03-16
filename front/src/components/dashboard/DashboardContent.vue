@@ -1,10 +1,12 @@
 <template>
   <div id="dashboard">
     <SideBar />
-
+    
     <div id="dashboard-content">
+        
       <div id="dashboard-content-header">
         <h1><slot name="title"></slot></h1>
+      
 
         <div id="dashboard-content-header-info">
           <slot name="info"></slot>
@@ -14,16 +16,22 @@
           <slot name="logo"></slot>
         </div>
       </div>
+    
 
       <div id="dashboard-content-main">
         <slot name="main"></slot>
       </div>
+
+      <slot name="modal"></slot>
+
     </div>
   </div>
 </template>
 
 <script>
 import SideBar from "@/components/dashboard/SideBar";
+
+
 export default {
   name: "DashboardContent",
   components: { SideBar },
