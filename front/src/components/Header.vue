@@ -4,7 +4,7 @@
     <div id="header--title">
       <router-link to="/"><img id="header--title-logo" src="../assets/logo.png" alt="Logo"></router-link>
       <div id="header--title-content">
-        <h1>My ToDo List</h1>
+        <h1>My ToDo Lists</h1>
         <h2>by Pierrick, Meric, Guillaume and Kais</h2>
       </div>
     </div>
@@ -122,7 +122,7 @@ export default {
   }
 
   #header--title-content {
-    width: 250px;
+    width: 255px;
   }
 
   #header--title-content h1 {
