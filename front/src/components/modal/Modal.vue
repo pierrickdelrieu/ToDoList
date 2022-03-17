@@ -1,7 +1,7 @@
 <template>
     <div id="modal" @click.self="close">
         <div id="modal-content">
-            <img id="modal-close-icon" src="../../assets/close.svg" alt="Close modal icon" @click="close">
+            <img  v-show="displayCloseIcon" id="modal-close-icon" src="../../assets/close.svg" alt="Close modal icon" @click="close">
             <div class="modal-item"><slot name="header"></slot></div>
             <div class="modal-item"><slot name="content">Empty PopUp</slot></div>
             <div class="modal-item"><slot name="footer"></slot></div>
@@ -13,6 +13,12 @@
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: "Modal",
+    props: {
+        displayCloseIcon: {
+            type: Boolean,
+            default: true
+        }
+    },
     methods: {
         close() {
             this.$emit('close');

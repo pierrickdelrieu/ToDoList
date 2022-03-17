@@ -1,14 +1,20 @@
 <script>
 import DashboardContent from "@/components/dashboard/DashboardContent";
 import NewListModal from "@/components/modal/NewListModal";
+import ConfirmModal from "@/components/modal/ConfirmModal";
+
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Dashboard",
-  components: {DashboardContent, NewListModal},
+  components: {DashboardContent, NewListModal, ConfirmModal},
   data() {
     return {
       isNewListModal: false,
+      isConfirmFavoriteModal: false,
+      isConfirmRemoveModal: false,
+      listEvent: null,
+
       lists: [
         {
           id: 1,
@@ -47,11 +53,37 @@ export default {
     }
   },
   methods: {
-    showModal() {
-      this.isNewListModal = true;
+    toggleNewListModal() {
+      this.isNewListModal = !this.isNewListModal;
     },
-    closeModal() {
-      this.isNewListModal = false;
+    toggleConfirmFavoriteModal(list) {
+      this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
+      this.listEvent = list;
+      console.log(this.listEvent)
+    },
+    toggleConfirmRemoveModal(list) {
+      this.isConfirmRemoveModal = !this.isConfirmRemoveModal;
+      this.listEvent = list;
+      console.log(this.listEvent);
+
+      // if(list != null) {
+      //   this.listEvent = list;
+      //   // console.log(this.listEvent.name)
+      // } else {
+      //   this.l
+      // }
+    },
+    addToFavorite() {
+      this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
+      // update database with api call
+      this.listEvent = null;
+    },
+    removeTask() {
+      this.isConfirmRemoveModal = !this.isConfirmRemoveModal;
+      // update database with api call
+      this.listEvent = null;
+          // :content="this.listEvent.is_favorite ? 'Are you sure you want to add the ' + this.listEvent.name + ' list to your favorites ?' : 'Are you sure you want to remove the ' + this.listEvent.name + ' list from your favorites?'"
+
     }
   },
 }
@@ -60,13 +92,21 @@ export default {
 
 <template>
   <div>
-    <NewListModal v-show="isNewListModal" @close="closeModal"/>
+    <NewListModal v-show="isNewListModal" @close="toggleNewListModal"/>
+
+    <ConfirmModal v-show="isConfirmFavoriteModal" 
+    :content="this.listEvent ? this.listEvent.is_favorite ? 'Are you sure you want to remove the ' + this.listEvent.name + ' list from your favorites?' : 'Are you sure you want to add the ' + this.listEvent.name + ' list to your favorites ?' : 'Error Retry'"
+    @cancel="toggleConfirmFavoriteModal(null)" @confirm="addToFavorite"/>
+
+    <ConfirmModal v-show="isConfirmRemoveModal" 
+    :content="this.listEvent ? 'Are you sure you want to delete the ' + this.listEvent.name + ' list permanently?' : 'Error Retry'"
+    @cancel="toggleConfirmRemoveModal(null)" @confirm="removeTask"/>
 
     <DashboardContent>
       <template v-slot:title>My ToDo lists</template>
 
       <template v-slot:logo>
-        <img src="../assets/plus-circle.svg" alt="Plus circle" @click="showModal" style="cursor: pointer;">
+        <img src="../assets/plus-circle.svg" alt="Plus circle" @click="toggleNewListModal" style="cursor: pointer;">
       </template>
 
       <template v-slot:info>
@@ -92,10 +132,10 @@ export default {
               <p>{{ member }}</p>
             </div></td>
             <td style="width: 130px">
-              <img v-if="list.is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked icon">
-              <img v-else src="../assets/favorite.svg" alt="Favorite icon">
+              <img v-if="list.is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked icon" @click="toggleConfirmFavoriteModal(list)" style="cursor: pointer;">
+              <img v-else src="../assets/favorite.svg" alt="Favorite icon" @click="toggleConfirmFavoriteModal(list)" style="cursor: pointer;">
               <img src="../assets/share.svg" alt="Share icon">
-              <img src="../assets/bin.svg" alt="Delete icon ">
+              <img src="../assets/bin.svg" alt="Delete icon " @click="toggleConfirmRemoveModal(list)" style="cursor: pointer;">
             </td>
           </tr>
         </table>

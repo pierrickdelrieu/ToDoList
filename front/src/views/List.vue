@@ -4,17 +4,19 @@ import KwRubric from "@/components/dashboard/KwRubric";
 import KwTask from "@/components/dashboard/KwTask";
 import Modal from "@/components/modal/Modal";
 import NewRubricModal from "@/components/modal/NewRubricModal";
+import ConfirmModal from '../components/modal/ConfirmModal.vue';
 
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, Modal, NewRubricModal },
+  components: { KwTask, KwRubric, DashboardContent, Modal, NewRubricModal, ConfirmModal },
   props:['id'],
   data() {
     return {
       isNewTaskModal: false,
       isNewRubricModal: false,
+      isConfirmFavoriteModal: false,
 
       title: "Kanban Model",
       is_favorite: false,
@@ -95,17 +97,18 @@ export default {
     }
   },
   methods: {
-    showNewTaskModal() {
-      this.isNewTaskModal = true;
+    toggleNewTaskModal() {
+      this.isNewTaskModal = !this.isNewTaskModal;
     },
-    closeNewTaskModal() {
-      this.isNewTaskModal = false;
+    toggleNewRubricModal() {
+      this.isNewRubricModal = !this.isNewRubricModal;
     },
-    showNewRubricModal() {
-      this.isNewRubricModal = true;
+    toggleConfirmFavoriteModal() {
+      this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
     },
-    closeNewRubricModal() {
-      this.isNewRubricModal = false;
+    addToFavorite() {
+      this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
+      // update database with api call
     }
   },
 }
@@ -114,14 +117,18 @@ export default {
 
 <template>
   <div>
-    <Modal v-show="isNewTaskModal" @close="closeNewTaskModal">
+    <Modal v-show="isNewTaskModal" @close="toggleNewTaskModal">
       <template v-slot:header>dfd</template>
       <template v-slot:content>dfa</template>
       <template v-slot:footer>fdf</template>
     </Modal>
 
 
-    <NewRubricModal v-show="isNewRubricModal" @close="closeNewRubricModal"/>
+    <NewRubricModal v-show="isNewRubricModal" @close="toggleNewRubricModal"/>
+
+    <ConfirmModal v-show="isConfirmFavoriteModal" 
+    content="Are you sure you want to bookmark this list?" 
+    @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
 
 
     
@@ -135,10 +142,10 @@ export default {
       <template v-slot:title>{{ title }} {{ id }}</template>
 
       <template v-slot:logo>
-        <img v-if="is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked">
-        <img v-else src="../assets/favorite.svg" alt="Favorite checked">
+        <img v-if="is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked" @click="toggleConfirmFavoriteModal" style="cursor: pointer;">
+        <img v-else src="../assets/favorite.svg" alt="Favorite checked" @click="toggleConfirmFavoriteModal" style="cursor: pointer;">
         <img src="../assets/share.svg" alt="Share icon">
-        <img src="../assets/plus-circle.svg" alt="Plus circle" @click="showNewRubricModal" style="cursor: pointer;">
+        <img src="../assets/plus-circle.svg" alt="Plus circle" @click="toggleNewRubricModal" style="cursor: pointer;">
       </template>
 
       <template v-slot:info>
@@ -149,7 +156,7 @@ export default {
       </template>
 
       <template v-slot:main>
-        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="showNewTaskModal">
+        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="toggleNewTaskModal">
           <template v-slot:tasks>
             <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task"/>
           </template>
