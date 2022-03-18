@@ -60,7 +60,7 @@ export default {
         flex-direction: column;
         justify-content: space-between;
 
-        padding: 20px;
+        padding: 20px 40px;
     }
 
     #modal-close-icon {

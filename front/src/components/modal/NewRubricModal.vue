@@ -2,7 +2,8 @@
   <Modal @close="close">
     <template v-slot:header>
         <div id="newRubricModal-header">
-            <h1 id="newRubricModal-title">New Rubric</h1>
+            <h1>New Rubric</h1>
+            <p>in {{ list.name }}</p>
         </div>
     </template>
 
@@ -24,6 +25,11 @@ import InputField from './InputFieldModal.vue';
 export default {
     name: "NewRubricModal",
     components: { Modal, InputField },
+    props: {
+        list: {
+            required: true
+        }
+    },
     data() {
         return {
             name: "",
@@ -42,23 +48,22 @@ export default {
 
 <style>
     #newRubricModal-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        /* background-color: aliceblue; */
         margin-bottom: 30px;
     }
 
-    #newRubricModal-header > h1 {
+    #newRubricModal-header > h1 {        
         margin: 0;
+        text-align: center;
+
         font-weight: 500;
         font-size: 36px;
-        display: flex;
-        align-items: center;
 
-        color: #2E82FF;
-        margin-right: 20px;
+        color: #2A1E17;
+    }
+
+    #newRubricModal-header > p {
+        text-align: center;
+        margin: 0;
     }
 
 
@@ -94,25 +99,25 @@ export default {
 
 
     #newRubricModal-submit {
-        margin-top: 20px;
+        margin: 0 10px;
+        width: 100px;
+        height: 35px;
 
-        width: 120px;
-        height: 40px;
-
-        background: #F25019;
-        border-radius: 10px;
-        border: unset;
-        cursor: pointer;
-
-
-        font-weight: 700;
-        font-size: 20px;
+        font-weight: 600;
+        font-size: 15px;
+        color: #FFFFFF;
 
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
+        border: unset;
 
-        color: #FFFFFF;
+        border-radius: 10px;
+        cursor: pointer;
+
+        background: #F25019;
+
+        margin-top: 20px;
     }
 
     #newRubricModal-submit:hover{

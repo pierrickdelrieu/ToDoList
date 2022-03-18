@@ -62,12 +62,12 @@ export default {
 
     #newListModal-header > h1 {
         margin: 0;
+        text-align: center;
+
         font-weight: 500;
         font-size: 36px;
-        display: flex;
-        align-items: center;
 
-        color: #2E82FF;
+        color: #2A1E17;
         margin-right: 20px;
     }
 
@@ -104,25 +104,25 @@ export default {
 
 
     #newListModal-submit {
-        margin-top: 20px;
+        margin: 0 10px;
+        width: 100px;
+        height: 35px;
 
-        width: 120px;
-        height: 40px;
-
-        background: #F25019;
-        border-radius: 10px;
-        border: unset;
-        cursor: pointer;
-
-
-        font-weight: 700;
-        font-size: 20px;
+        font-weight: 600;
+        font-size: 15px;
+        color: #FFFFFF;
 
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
+        border: unset;
 
-        color: #FFFFFF;
+        border-radius: 10px;
+        cursor: pointer;
+
+        background: #F25019;
+
+        margin-top: 20px;
     }
 
     #newListModal-submit:hover{

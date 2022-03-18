@@ -2,7 +2,7 @@
 import DashboardContent from "@/components/dashboard/DashboardContent";
 import KwRubric from "@/components/dashboard/KwRubric";
 import KwTask from "@/components/dashboard/KwTask";
-import Modal from "@/components/modal/Modal";
+import NewTaskModal from "@/components/modal/NewTaskModal";
 import NewRubricModal from "@/components/modal/NewRubricModal";
 import ConfirmModal from '../components/modal/ConfirmModal.vue';
 
@@ -10,17 +10,34 @@ import ConfirmModal from '../components/modal/ConfirmModal.vue';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, Modal, NewRubricModal, ConfirmModal },
+  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal },
   props:['id'],
   data() {
     return {
       isNewTaskModal: false,
       isNewRubricModal: false,
       isConfirmFavoriteModal: false,
+      rubricForNewTask: null,
 
       title: "Kanban Model",
       is_favorite: false,
-      members: ["Pierrick", "Meric", "Kais", "Guillaume"],
+      members: [
+        { id: 1, 
+          firstname: "Pierrick",
+          lastname:  "Delrieu"
+        },
+        { id: 2, 
+          firstname: "Meric",
+          lastname:  "Chenu"
+        },
+        { id: 3, 
+          firstname: "Kais",
+          lastname:  "Zegdoud"
+        },
+        { id: 4, 
+          firstname: "Guillaume",
+          lastname:  "Dumas"
+        }],
       rubrics: [
         {
           id: 1,
@@ -97,8 +114,17 @@ export default {
     }
   },
   methods: {
-    toggleNewTaskModal() {
+    toggleNewTaskModal(rubric) {
       this.isNewTaskModal = !this.isNewTaskModal;
+
+      if(this.isNewTaskModal) {
+        this.rubricForNewTask = {
+          id: rubric.id,
+          name: rubric.name
+        }
+      } else {
+        this.rubricForNewTask = null;
+      }
     },
     toggleNewRubricModal() {
       this.isNewRubricModal = !this.isNewRubricModal;
@@ -117,21 +143,13 @@ export default {
 
 <template>
   <div>
-    <Modal v-show="isNewTaskModal" @close="toggleNewTaskModal">
-      <template v-slot:header>dfd</template>
-      <template v-slot:content>dfa</template>
-      <template v-slot:footer>fdf</template>
-    </Modal>
+    <NewTaskModal v-show="isNewTaskModal" @close="toggleNewTaskModal" :members="members" :rubric='rubricForNewTask'/>
 
-
-    <NewRubricModal v-show="isNewRubricModal" @close="toggleNewRubricModal"/>
+    <NewRubricModal v-show="isNewRubricModal" @close="toggleNewRubricModal" :list="{id: id, name: title}"/>
 
     <ConfirmModal v-show="isConfirmFavoriteModal" 
     content="Are you sure you want to bookmark this list?" 
     @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
-
-
-    
 
     
     <DashboardContent>
@@ -151,12 +169,12 @@ export default {
       <template v-slot:info>
         <div class="dashboard-content-header-info-item"><h1>Number of tasks</h1><p>{{ numberOfTask }}</p></div>
         <div class="dashboard-content-header-info-item"><h1>Participants</h1>
-          <p v-for="(member, index) in members" :key="index" style="margin: 0 4px">{{ member }}</p>
+          <p v-for="(member, index) in members" :key="index" style="margin: 0 4px">{{ member.firstname }}</p>
         </div>
       </template>
 
       <template v-slot:main>
-        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="toggleNewTaskModal">
+        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="toggleNewTaskModal(rubric)">
           <template v-slot:tasks>
             <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task"/>
           </template>
