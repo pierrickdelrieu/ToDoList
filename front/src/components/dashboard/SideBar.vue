@@ -345,4 +345,11 @@ export default {
       border-radius: 10px;
     }
   }
+
+
+  @media screen and (max-height: 500px) {
+    #side-bar-footer {
+      display: none;
+    }
+  }
 </style>

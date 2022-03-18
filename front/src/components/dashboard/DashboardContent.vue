@@ -96,6 +96,13 @@ export default {
   margin: 0;
 }
 
+#dashboard-content-header-logo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 #dashboard-content-header-logo > img {
   margin: 0 10px;
   width: 20px;
