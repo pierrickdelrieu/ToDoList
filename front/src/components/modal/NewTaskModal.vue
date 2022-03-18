@@ -81,7 +81,7 @@ export default {
         <template v-slot:header>
             <div id="newTaskModal-header">
                 <h1>New Task</h1>
-                <p>{{ rubric ? 'in ' + rubric.name : 'Rubric unfound'}}</p>
+                <p>{{ rubric ? 'in ' + rubric.name : 'Undefined rubric'}}</p>
             </div>
         </template>
 
