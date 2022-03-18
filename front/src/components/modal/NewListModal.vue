@@ -17,7 +17,7 @@
                     </div>
                 </div>
 
-                <input type="submit" id="newListModal-submit" value="Create">
+                <ButtonModal id="newListModal-submit" content="Create"/>
             </form>
     </template>
     
@@ -27,11 +27,13 @@
 
 <script>
 import Modal from "@/components/modal/Modal";
-import InputField from './InputFieldModal.vue';
+import InputField from "@/components/modal/InputFieldModal";
+import ButtonModal from "@/components/modal/ButtonModal";
+
 
 export default {
     name: "NewListModal",
-    components: { Modal, InputField },
+    components: { Modal, InputField, ButtonModal },
     data() {
         return {
             name: "",
@@ -104,31 +106,8 @@ export default {
 
 
     #newListModal-submit {
-        margin: 0 10px;
-        width: 100px;
-        height: 35px;
-
-        font-weight: 600;
-        font-size: 15px;
-        color: #FFFFFF;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        border: unset;
-
-        border-radius: 10px;
-        cursor: pointer;
-
-        background: #F25019;
-
         margin-top: 20px;
     }
-
-    #newListModal-submit:hover{
-        background: rgba(242, 80, 25, 0.8);
-    }
-
 
 
     #newListModal-form-checkbox {

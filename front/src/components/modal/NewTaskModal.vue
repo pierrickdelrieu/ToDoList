@@ -1,13 +1,14 @@
 <script>
 import Modal from "@/components/modal/Modal";
 import InputField from "@/components/modal/InputFieldModal";
+import ButtonModal from "@/components/modal/ButtonModal";
 import moment from 'moment'
 
 
 export default {
     
     name: "NewTaskModal",
-    components: { Modal, InputField },
+    components: { Modal, InputField, ButtonModal },
     props: {
         members: {
             type: Array,
@@ -80,7 +81,7 @@ export default {
         <template v-slot:header>
             <div id="newTaskModal-header">
                 <h1>New Task</h1>
-                <p>in {{ rubric.name }}</p>
+                <p>{{ rubric ? 'in ' + rubric.name : 'Rubric unfound'}}</p>
             </div>
         </template>
 
@@ -110,8 +111,7 @@ export default {
                     </div>
                 </div>
 
-
-                <input type="submit" id="newTaskModal-submit" value="Create" class="newTaskModal-form-item">
+                <ButtonModal class="newTaskModal-form-item" content="Create"/>
             </form>
         </template>
     
@@ -195,36 +195,6 @@ export default {
     .newTaskModal-form-highPriority {
         background-color: #FFDCE0;
     }
-
-
-    /* ******************** Submit ******************** */
-    #newTaskModal-submit {
-        margin: 0 10px;
-        width: 100px;
-        height: 35px;
-
-        font-weight: 600;
-        font-size: 15px;
-        color: #FFFFFF;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        border: unset;
-
-        border-radius: 10px;
-        cursor: pointer;
-
-        background: #F25019;
-
-        margin-top: 20px;
-    }
-
-    #newTaskModal-submit:hover{
-        background: rgba(242, 80, 25, 0.8);
-    }
-
-
 
     @media screen and (max-width: 500px) {
         #newTaskModal-form {

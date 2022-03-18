@@ -10,7 +10,7 @@
     <template v-slot:content>
             <form id="newRubricModal-form" @submit.prevent="addRubic">
                 <InputField label="Name" v-model="name" placeholder="Rubric name" type="text" /> 
-                <input type="submit" id="newRubricModal-submit" value="Create">
+                <ButtonModal id="newRubricModal-submit" content="Create"/>
             </form>
     </template>
     
@@ -20,11 +20,13 @@
 
 <script>
 import Modal from "@/components/modal/Modal";
-import InputField from './InputFieldModal.vue';
+import InputField from "@/components/modal/InputFieldModal";
+import ButtonModal from "@/components/modal/ButtonModal";
+
 
 export default {
     name: "NewRubricModal",
-    components: { Modal, InputField },
+    components: { Modal, InputField, ButtonModal },
     props: {
         list: {
             required: true
@@ -99,29 +101,7 @@ export default {
 
 
     #newRubricModal-submit {
-        margin: 0 10px;
-        width: 100px;
-        height: 35px;
-
-        font-weight: 600;
-        font-size: 15px;
-        color: #FFFFFF;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        border: unset;
-
-        border-radius: 10px;
-        cursor: pointer;
-
-        background: #F25019;
-
         margin-top: 20px;
-    }
-
-    #newRubricModal-submit:hover{
-        background: rgba(242, 80, 25, 0.8);
     }
 
 

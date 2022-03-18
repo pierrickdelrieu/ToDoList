@@ -6,8 +6,8 @@
 
     <template v-slot:content>
         <div id="confirmModal-content">
-            <div id="confirmModal-cancel" class="confirmModal-item" @click="cancel">Cancel</div> 
-            <div id="confirmModal-ok" class="confirmModal-item" @click="confirm">Ok</div>
+            <ButtonModal content="Cancel" color='grey' @click="cancel"/>
+            <ButtonModal content="Ok" color='red' @click="confirm"/>
         </div>
     </template>
     
@@ -17,10 +17,11 @@
 
 <script>
 import Modal from "@/components/modal/Modal";
+import ButtonModal from "@/components/modal/ButtonModal";
 
 export default {
     name: "ConfirmModal",
-    components: { Modal },
+    components: { Modal, ButtonModal },
     props: {
         content: {
             type: String,
@@ -79,7 +80,6 @@ export default {
 </script>
 
 <style>
-
     #confirmModal-message {
         margin: 0;
         margin-bottom: 15px;
@@ -94,39 +94,5 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-    }
-
-    .confirmModal-item {
-        margin: 0 10px;
-        width: 100px;
-        height: 35px;
-
-        font-weight: 600;
-        font-size: 15px;
-        color: #FFFFFF;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-    #confirmModal-ok {
-        background: #F25019;
-    }
-
-    #confirmModal-ok:hover{
-        background: rgba(242, 80, 25, 0.8);
-    }
-
-
-    #confirmModal-cancel {
-        background: #A5A5A5;
-    }
-
-    #confirmModal-cancel:hover{
-        background: #BFBFBF;
     }
 </style>

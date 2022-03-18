@@ -5,18 +5,20 @@ import KwTask from "@/components/dashboard/KwTask";
 import NewTaskModal from "@/components/modal/NewTaskModal";
 import NewRubricModal from "@/components/modal/NewRubricModal";
 import ConfirmModal from '../components/modal/ConfirmModal.vue';
+import ShareModal from '../components/modal/ShareModal.vue';
 
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal },
+  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal },
   props:['id'],
   data() {
     return {
       isNewTaskModal: false,
       isNewRubricModal: false,
       isConfirmFavoriteModal: false,
+      isShareModal: false,
       rubricForNewTask: null,
 
       title: "Kanban Model",
@@ -129,6 +131,9 @@ export default {
     toggleNewRubricModal() {
       this.isNewRubricModal = !this.isNewRubricModal;
     },
+    toggleShareModal() {
+      this.isShareModal = !this.isShareModal;
+    },
     toggleConfirmFavoriteModal() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
     },
@@ -151,6 +156,8 @@ export default {
     content="Are you sure you want to bookmark this list?" 
     @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
 
+    <ShareModal v-show="isShareModal" @close="toggleShareModal"/>
+
     
     <DashboardContent>
       <template v-slot:modal>
@@ -162,7 +169,7 @@ export default {
       <template v-slot:logo>
         <img v-if="is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked" @click="toggleConfirmFavoriteModal" style="cursor: pointer;">
         <img v-else src="../assets/favorite.svg" alt="Favorite checked" @click="toggleConfirmFavoriteModal" style="cursor: pointer;">
-        <img src="../assets/share.svg" alt="Share icon">
+        <img src="../assets/share.svg" alt="Share icon" @click="toggleShareModal" style="cursor: pointer;">
         <img src="../assets/plus-circle.svg" alt="Plus circle" @click="toggleNewRubricModal" style="cursor: pointer;">
       </template>
 
