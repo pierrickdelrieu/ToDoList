@@ -157,7 +157,7 @@ export default {
     <NewRubricModal v-show="isNewRubricModal" @close="toggleNewRubricModal" :list="{id: id, name: title}"/>
 
     <ConfirmModal v-show="isConfirmFavoriteModal" 
-    content="Are you sure you want to bookmark this list?" 
+    :content="'Are you sure you want to bookmark ' + title + ' list?'"
     @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
 
     <ShareModal v-show="isShareModal" @close="toggleShareModal" :list="{id: id, name: title, members: members}"/>
