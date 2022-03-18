@@ -10,7 +10,7 @@
         <template v-slot:content>
             <p id="shareModal-list">{{ list ? list.name : 'Undefined list' }}</p>
 
-            <div v-if="list.members" id="shareModal-members">
+            <div v-if="list && list.members" id="shareModal-members">
                 <p>Already sharing with :</p>
                 <div id="shareModal-members-items">
                     <p v-for="member in list.members" :key="member.id">{{ member.mail }}</p>
