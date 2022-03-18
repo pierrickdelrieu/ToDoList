@@ -4,14 +4,15 @@ import KwRubric from "@/components/dashboard/KwRubric";
 import KwTask from "@/components/dashboard/KwTask";
 import NewTaskModal from "@/components/modal/NewTaskModal";
 import NewRubricModal from "@/components/modal/NewRubricModal";
-import ConfirmModal from '../components/modal/ConfirmModal.vue';
-import ShareModal from '../components/modal/ShareModal.vue';
+import ConfirmModal from '@/components/modal/ConfirmModal';
+import ShareModal from '@/components/modal/ShareModal';
+import Loading from '@/components/Loading';
 
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal },
+  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal, Loading },
   props:['id'],
   data() {
     return {
@@ -152,6 +153,7 @@ export default {
 
 <template>
   <div>
+    <Loading v-show="false"/>
     <NewTaskModal v-show="isNewTaskModal" @close="toggleNewTaskModal" :members="members" :rubric='rubricForNewTask'/>
 
     <NewRubricModal v-show="isNewRubricModal" @close="toggleNewRubricModal" :list="{id: id, name: title}"/>
