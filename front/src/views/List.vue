@@ -26,19 +26,23 @@ export default {
       members: [
         { id: 1, 
           firstname: "Pierrick",
-          lastname:  "Delrieu"
+          lastname:  "Delrieu",
+          mail: "pierrick.delrieu@efrei.net"
         },
         { id: 2, 
           firstname: "Meric",
-          lastname:  "Chenu"
+          lastname:  "Chenu",
+          mail: "meric.chenu@efrei.net"
         },
         { id: 3, 
           firstname: "Kais",
-          lastname:  "Zegdoud"
+          lastname:  "Zegdoud",
+          mail: "kais.zegdoud@efrei.net"
         },
         { id: 4, 
           firstname: "Guillaume",
-          lastname:  "Dumas"
+          lastname:  "Dumas",
+          mail: "guillaume.dumas@efrei.net"
         }],
       rubrics: [
         {
@@ -156,9 +160,8 @@ export default {
     content="Are you sure you want to bookmark this list?" 
     @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
 
-    <ShareModal v-show="isShareModal" @close="toggleShareModal"/>
+    <ShareModal v-show="isShareModal" @close="toggleShareModal" :list="{id: id, name: title}" :members="members"/>
 
-    
     <DashboardContent>
       <template v-slot:modal>
         
