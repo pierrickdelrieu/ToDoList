@@ -1,7 +1,7 @@
 <template>
     <div id="loading">
         <div id="loading-content">
-            <h1>Chragement en cours</h1>
+            <h1>Loading in progress ...</h1>
             <img src="../assets/loading.svg" alt="Loading icon"/>
         </div>
     </div>
