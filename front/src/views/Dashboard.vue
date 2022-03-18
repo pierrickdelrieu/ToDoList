@@ -2,17 +2,19 @@
 import DashboardContent from "@/components/dashboard/DashboardContent";
 import NewListModal from "@/components/modal/NewListModal";
 import ConfirmModal from "@/components/modal/ConfirmModal";
+import ShareModal from "@/components/modal/ShareModal";
 
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Dashboard",
-  components: {DashboardContent, NewListModal, ConfirmModal},
+  components: {DashboardContent, NewListModal, ConfirmModal, ShareModal},
   data() {
     return {
       isNewListModal: false,
       isConfirmFavoriteModal: false,
       isConfirmRemoveModal: false,
+      isShareModal: false,
       listEvent: null,
 
       lists: [
@@ -20,21 +22,41 @@ export default {
           id: 1,
           name: "Kanban model",
           is_favorite: true,
-          member: null,
+          members: null,
           number_of_task: 6
         },
         {
           id: 2,
           name: "Education",
           is_favorite: false,
-          member: ["KZ"],
+          members: [
+        { id: 1, 
+          firstname: "Pierrick",
+          lastname:  "Delrieu",
+          mail: "pierrick.delrieu@efrei.net"
+        },
+        { id: 2, 
+          firstname: "Meric",
+          lastname:  "Chenu",
+          mail: "meric.chenu@efrei.net"
+        },
+        { id: 3, 
+          firstname: "Kais",
+          lastname:  "Zegdoud",
+          mail: "kais.zegdoud@efrei.net"
+        },
+        { id: 4, 
+          firstname: "Guillaume",
+          lastname:  "Dumas",
+          mail: "guillaume.dumas@efrei.net"
+        }],
           number_of_task: 6
         },
         {
           id: 3,
           name: "Travel",
           is_favorite: true,
-          member: ["PD", "MC", "GD"],
+          members: null,
           number_of_task: 6
         }
       ]
@@ -59,19 +81,24 @@ export default {
     toggleConfirmFavoriteModal(list) {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
       this.listEvent = list;
-      console.log(this.listEvent)
     },
     toggleConfirmRemoveModal(list) {
       this.isConfirmRemoveModal = !this.isConfirmRemoveModal;
       this.listEvent = list;
-      console.log(this.listEvent);
+    },
+    toggleShareModal(list) {
+      this.isShareModal = !this.isShareModal;
 
-      // if(list != null) {
-      //   this.listEvent = list;
-      //   // console.log(this.listEvent.name)
-      // } else {
-      //   this.l
-      // }
+
+      if(list) {
+        this.listEvent = {
+            id: list.id, 
+            name: list.name,
+            members: list.members
+          };
+      } else {
+        this.listEvent = list
+      }
     },
     addToFavorite() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
@@ -82,8 +109,6 @@ export default {
       this.isConfirmRemoveModal = !this.isConfirmRemoveModal;
       // update database with api call
       this.listEvent = null;
-          // :content="this.listEvent.is_favorite ? 'Are you sure you want to add the ' + this.listEvent.name + ' list to your favorites ?' : 'Are you sure you want to remove the ' + this.listEvent.name + ' list from your favorites?'"
-
     }
   },
 }
@@ -101,6 +126,9 @@ export default {
     <ConfirmModal v-show="isConfirmRemoveModal" 
     :content="this.listEvent ? 'Are you sure you want to delete the ' + this.listEvent.name + ' list permanently?' : 'Error Retry'"
     @cancel="toggleConfirmRemoveModal(null)" @confirm="removeTask"/>
+
+    <ShareModal v-show="isShareModal" @close="toggleShareModal(null)" :list="listEvent"/>
+
 
     <DashboardContent>
       <template v-slot:title>My ToDo lists</template>
@@ -128,13 +156,13 @@ export default {
                 {{ list.name }}
               </router-link></td>
             <td>{{ list.number_of_task }}</td>
-            <td><div v-for="(member, index) in list.member" :key="index" class="dashboard-table-members">
-              <p>{{ member }}</p>
+            <td><div v-for="(member, index) in list.members" :key="index" class="dashboard-table-members">
+              <p>{{ member.firstname[0].toUpperCase() }}{{ member.lastname[0].toUpperCase() }}</p>
             </div></td>
             <td style="width: 130px">
               <img v-if="list.is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked icon" @click="toggleConfirmFavoriteModal(list)" style="cursor: pointer;">
               <img v-else src="../assets/favorite.svg" alt="Favorite icon" @click="toggleConfirmFavoriteModal(list)" style="cursor: pointer;">
-              <img src="../assets/share.svg" alt="Share icon">
+              <img src="../assets/share.svg" alt="Share icon" @click="toggleShareModal(list)" style="cursor: pointer;">
               <img src="../assets/bin.svg" alt="Delete icon " @click="toggleConfirmRemoveModal(list)" style="cursor: pointer;">
             </td>
           </tr>

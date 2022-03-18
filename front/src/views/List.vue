@@ -160,7 +160,7 @@ export default {
     content="Are you sure you want to bookmark this list?" 
     @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
 
-    <ShareModal v-show="isShareModal" @close="toggleShareModal" :list="{id: id, name: title}" :members="members"/>
+    <ShareModal v-show="isShareModal" @close="toggleShareModal" :list="{id: id, name: title, members: members}"/>
 
     <DashboardContent>
       <template v-slot:modal>

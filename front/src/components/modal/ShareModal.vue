@@ -10,10 +10,10 @@
         <template v-slot:content>
             <p id="shareModal-list">{{ list ? list.name : 'Undefined list' }}</p>
 
-            <div v-if="members" id="shareModal-members">
+            <div v-if="list.members" id="shareModal-members">
                 <p>Already sharing with :</p>
                 <div id="shareModal-members-items">
-                    <p v-for="member in members" :key="member.id">{{ member.mail }}</p>
+                    <p v-for="member in list.members" :key="member.id">{{ member.mail }}</p>
                 </div>
             </div>
 
@@ -47,10 +47,6 @@ export default {
     props: {
         list: {
             required: true
-        },
-        members: {
-            type: Array,
-            default: null
         }
     },
     methods: {
@@ -151,10 +147,6 @@ export default {
     @media screen and (max-width: 460px) {
         #shareModal-members {
             display: none;
-        }
-
-        #shareModal-members-none {
-            /* display: none; */
         }
     }
 
