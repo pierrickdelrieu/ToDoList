@@ -21,6 +21,10 @@ export default {
   methods: {
     showNewTaskModal() {
       this.$emit("showNewTaskModal")
+    },
+    updateTitle(e) {
+      console.log(e)
+      // call API
     }
   },
   computed: {
