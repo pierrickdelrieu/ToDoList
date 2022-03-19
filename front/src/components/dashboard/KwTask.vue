@@ -15,23 +15,30 @@ export default {
           for (let i = 0; i < 3; i++) {
             members.push(this.task.members[i])
           }
-          members.push("...")
           return members
         }
       }
       return this.task.members;
     }
-  }
+  },
+  methods: {
+    click() {
+      this.$emit('click')
+    }
+  },
 }
 </script>
 
 <template>
-  <div class="kw-task">
+  <div class="kw-task" @click="click">
     <h1>{{ task.name }}</h1>
 
       <div v-show="task.members" class="kw-task-members kw-task-element">
         <img src="../../assets/team.svg" alt="Team icon">
-        <p v-for="(member, index) in membersReduce" :key="index">{{ member}}</p>
+        <p v-for="(member, index) in membersReduce" :key="index">
+          {{ member.firstname[0].toUpperCase() }}{{ member.lastname[0].toUpperCase() }}
+        </p>
+        <p>{{ this.task.members ? (this.task.members.length > 3) ? '...' : '' : ''}}</p>
       </div>
 
       <div v-show="task.date" :class="[ task.priority === 1 ? 'kw-task-date-lowPriority' : task.priority === 2 ? 'kw-task-date-mediumPriority' : 'kw-task-date-highPriority', 'kw-task-date kw-task-element']">
