@@ -7,12 +7,14 @@ import NewRubricModal from "@/components/modal/NewRubricModal";
 import ConfirmModal from '@/components/modal/ConfirmModal';
 import ShareModal from '@/components/modal/ShareModal';
 import Loading from '@/components/Loading';
+import Editable from '@/components/Editable';
+
 
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal, Loading },
+  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal, Loading, Editable },
   props:['id'],
   data() {
     return {
@@ -145,6 +147,10 @@ export default {
     addToFavorite() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
       // update database with api call
+    },
+    updateTitle(e) {
+      this.title = e
+      console.log(this.title)
     }
   },
 }
@@ -169,7 +175,10 @@ export default {
         
       </template>
 
-      <template v-slot:title>{{ title }} {{ id }}</template>
+      <template v-slot:title>
+        <!-- {{ title }} {{ id }} -->
+        <Editable :value="title" @submit="updateTitle" name="Title" :size='36' :weight='500'/>
+      </template>
 
       <template v-slot:logo>
         <img v-if="is_favorite" src="../assets/favorite_checked.svg" alt="Favorite checked" @click="toggleConfirmFavoriteModal" style="cursor: pointer;">

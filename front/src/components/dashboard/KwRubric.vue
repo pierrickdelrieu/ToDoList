@@ -1,6 +1,9 @@
 <script>
+import Editable from "@/components/Editable"
+
 export default {
   name: "KwRubric",
+  components: { Editable },
   props: {
     title: {
       type: String,
@@ -37,7 +40,8 @@ export default {
     
 
     <div class="kw-rubric-header">
-      <h1>{{ title }}</h1>
+      <Editable :value="title" @submit="updateTitle" name="Title-rubric" :size='20' :weight='500'/>
+
 <!--      <p>{{ numberOfTask }}</p>-->
       <img src="../../assets/plus-circle-grey.svg" alt="Plus circle" @click="showNewTaskModal">
     </div>
@@ -69,7 +73,6 @@ export default {
   .kw-rubric-header > h1 {
     font-weight: 500;
     font-size: 20px;
-    line-height: 20px;
   }
   .kw-rubric-header > img {
     width: 24px;
