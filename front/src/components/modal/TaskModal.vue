@@ -23,6 +23,8 @@ export default {
     },
     data() {
         return {
+            isRemoveTaskModal: false,
+
             name: {
                 content: '',
                 updated: false
@@ -165,6 +167,10 @@ export default {
                 }
             }
             return false
+        },
+        removeTask() {
+            // CALL API
+            this.$emit("close")
         }
     }
 }
@@ -184,8 +190,12 @@ export default {
                 <input type="text" id="taskModal-name" name="taskModal-name" :value="task ? task.name : null" 
                 @input="updateName($event.target.value)">
 
-                <input type="date" id="taskModal-date" name="taskModal-date" :value="task ? task.date : null" 
-                @input="updateDate($event.target.value)">
+                <div id="taskModal-header-sub">
+                    <input type="date" id="taskModal-date" name="taskModal-date" :value="task ? task.date : null" 
+                    @input="updateDate($event.target.value)">
+
+                    <img src="../../assets/bin.svg" alt="Bin" style="margin-right: 30px; cursor: pointer;" @click="removeTask" />
+                </div>
             </div>
 
 
@@ -268,9 +278,13 @@ export default {
         color: #212121;
     }
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 450px) {
         #taskModal-name {
-            width: 150px;
+            width: 100%;
+            text-align: center;
+        }
+        #taskModal-header {
+            flex-direction: column;
         }
     }
 
@@ -304,6 +318,11 @@ export default {
     #taskModal-members > img {
         width: 24px;
         margin-right: 10px;
+    }
+
+    #taskModal-header-sub {
+        display: flex;
+        flex-direction: row;
     }
 
 
