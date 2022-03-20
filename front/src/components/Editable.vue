@@ -87,7 +87,7 @@ export default {
         box-shadow: inset 0px 1px 2px 1px rgba(38, 39, 40, 0.2);
         border-radius: 8px;
 
-        min-width: 10px;
+        min-width: 60px;
         display: flex;
         overflow-x: scroll;
         width: fit-content;
