@@ -8,7 +8,7 @@
         <h1><slot name="title"></slot></h1>
       
 
-        <div id="dashboard-content-header-info">
+        <div id="dashboard-content-header-info" v-show="displayInfo">
           <slot name="info"></slot>
         </div>
 
@@ -34,6 +34,12 @@ import SideBar from "@/components/dashboard/SideBar";
 
 export default {
   name: "DashboardContent",
+  props: {
+    displayInfo: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: { SideBar },
 };
 </script>
