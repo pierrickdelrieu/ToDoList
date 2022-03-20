@@ -1,4 +1,6 @@
 <script>
+import moment from 'moment'
+
 export default {
   name: "KwTask",
   props: {
@@ -19,6 +21,9 @@ export default {
         }
       }
       return this.task.members;
+    },
+    datePerso() {
+      return moment(this.task.date, "YYYY-MM-DD").format('MM/DD')
     }
   },
   methods: {
@@ -41,9 +46,9 @@ export default {
         <p>{{ this.task.members ? (this.task.members.length > 3) ? '...' : '' : ''}}</p>
       </div>
 
-      <div v-show="task.date" :class="[ task.priority === 1 ? 'kw-task-date-lowPriority' : task.priority === 2 ? 'kw-task-date-mediumPriority' : 'kw-task-date-highPriority', 'kw-task-date kw-task-element']">
-        <img src="../../assets/date.svg" alt="Date icon">
-        <p>Due {{ task.date }}</p>
+      <div v-show="task.date || task.priority"  :class="[ task.priority ? task.priority === 1 ? 'kw-task-date-lowPriority' : task.priority === 2 ? 'kw-task-date-mediumPriority' : 'kw-task-date-highPriority' : 'kw-task-date-emptyPriority', 'kw-task-date kw-task-element']">
+        <div v-show="task.date" style="display: flex"><img src="../../assets/date.svg" alt="Date icon">
+        <p>Due {{ datePerso }}</p></div>
       </div>
   </div>
 </template>
@@ -92,6 +97,9 @@ export default {
     padding: 4px 5px;
     border-radius: 10px;
     width: fit-content;
+
+    min-width: 10px;
+    min-height: 10px;
   }
   .kw-task-date-highPriority {
     background: #FFDCE0;
@@ -101,6 +109,9 @@ export default {
   }
   .kw-task-date-lowPriority {
     background: #DCFFDF;
+  }
+  .kw-task-date-emptyPriority {
+    background: #F2F2F2;
   }
   .kw-task-members {
     position: absolute;

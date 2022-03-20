@@ -8,13 +8,13 @@ import ConfirmModal from '@/components/modal/ConfirmModal';
 import ShareModal from '@/components/modal/ShareModal';
 import Loading from '@/components/Loading';
 import Editable from '@/components/Editable';
-
+import TaskModal from '@/components/modal/TaskModal';
 
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal, Loading, Editable },
+  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal, Loading, Editable, TaskModal },
   props:['id'],
   data() {
     return {
@@ -22,7 +22,8 @@ export default {
       isNewRubricModal: false,
       isConfirmFavoriteModal: false,
       isShareModal: false,
-      rubricForNewTask: null,
+      isTaskModal: false,
+      modalEvent: '',
 
       title: "Kanban Model",
       is_favorite: false,
@@ -55,9 +56,30 @@ export default {
             {
               id: 1,
               name: "Has to be done",
+              description: "Description de cette tache de merde",
               date: null,
               priority: 3,
-              members: ["PD", "KZ", "MC", "GD", "RC", "CM"]
+              members: [
+              { id: 1, 
+                firstname: "Pierrick",
+                lastname:  "Delrieu",
+                mail: "pierrick.delrieu@efrei.net"
+              },
+              { id: 2, 
+                firstname: "Meric",
+                lastname:  "Chenu",
+                mail: "meric.chenu@efrei.net"
+              },
+              { id: 3, 
+                firstname: "Kais",
+                lastname:  "Zegdoud",
+                mail: "kais.zegdoud@efrei.net"
+              },
+              { id: 4, 
+                firstname: "Guillaume",
+                lastname:  "Dumas",
+                mail: "guillaume.dumas@efrei.net"
+              }],
             }
           ]
         },
@@ -68,14 +90,26 @@ export default {
             {
               id: 2,
               name: "Title of task",
-              date: "4/11",
-              priority: 1,
-              members: ["PD", "KZ", "MC"]
+              description: "Description de",
+              date: '2022-04-03',
+              priority: null,
+              members:[
+                { id: 1, 
+                  firstname: "Pierrick",
+                  lastname:  "Delrieu",
+                  mail: "pierrick.delrieu@efrei.net"
+                },
+                { id: 2, 
+                  firstname: "Meric",
+                  lastname:  "Chenu",
+                  mail: "meric.chenu@efrei.net"
+                }],
             },
             {
               id: 3,
               name: "Title of task",
-              date: "4/11",
+              description: "Description de cette tache de merde",
+              date: '2022-04-03',
               priority: 2,
               members: null
             }
@@ -88,21 +122,24 @@ export default {
             {
               id: 4,
               name: "Title of task",
-              date: "4/11",
+              description: "Description de cette tache de merde",
+              date: "2022-04-03",
               priority: 2,
               members: null
             },
             {
               id: 5,
               name: "Title of task",
-              date: "4/11",
+              description: "Description de cette tache de merde",
+              date: "2022-04-03",
               priority: 2,
               members: null
             },
             {
               id: 6,
               name: "Title of task",
-              date: "4/11",
+              description: "Description de cette tache de merde",
+              date: "2022-04-03",
               priority: 3,
               members: null
             }
@@ -120,6 +157,18 @@ export default {
         })
       })
       return sum
+    },
+    rubricsShare() {
+      let rubrics = []
+
+      this.rubrics.forEach((item) => {
+        rubrics.push({
+          id: item.id,
+          name: item.name
+        })
+      })
+
+      return rubrics;
     }
   },
   methods: {
@@ -127,12 +176,12 @@ export default {
       this.isNewTaskModal = !this.isNewTaskModal;
 
       if(this.isNewTaskModal) {
-        this.rubricForNewTask = {
+        this.modalEvent = {
           id: rubric.id,
           name: rubric.name
         }
       } else {
-        this.rubricForNewTask = null;
+        this.modalEvent = null;
       }
     },
     toggleNewRubricModal() {
@@ -144,13 +193,50 @@ export default {
     toggleConfirmFavoriteModal() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
     },
+    toggleTaskModal(task, rubric) {
+      this.isTaskModal = !this.isTaskModal;
+
+      if(task && rubric) {
+        this.modalEvent = {
+          task: task,
+          currentRubric: rubric
+        }
+      } else {
+        this.modalEvent = null
+      }
+      // console.log("1- " + this.modalEvent)
+
+      // if(task && rubric) {
+      //   // let rubrics = []
+      //   // this.rubrics.forEach((item) => {
+      //   //   rubrics.push({
+      //   //     id: item.id,
+      //   //     name: item.name
+      //   //   })
+      //   // })
+
+      //   // this.modalEvent = {
+      //   //   task : task,
+      //   //   currentRubric : {
+      //   //     id: rubric.id,
+      //   //     name: rubric.name
+      //   //   }
+      //   // }
+      //   this.modalEvent = task
+      // } else {
+      //   this.modalEvent = null
+      // }
+
+      // console.log(this.modalEvent)
+    },
     addToFavorite() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
       // update database with api call
     },
     updateTitle(e) {
       this.title = e
-      console.log(this.title)
+      // console.log(this.title)
+      // call API
     }
   },
 }
@@ -160,9 +246,13 @@ export default {
 <template>
   <div>
     <Loading v-show="false"/>
-    <NewTaskModal v-show="isNewTaskModal" @close="toggleNewTaskModal" :members="members" :rubric='rubricForNewTask'/>
+    <NewTaskModal v-show="isNewTaskModal" @close="toggleNewTaskModal" :members="members" :rubric='modalEvent'/>
 
     <NewRubricModal v-show="isNewRubricModal" @close="toggleNewRubricModal" :list="{id: id, name: title}"/>
+
+    <TaskModal v-show="isTaskModal" @close="toggleTaskModal(null, null)" :members="members"
+      :task="modalEvent ? modalEvent.task : null" :rubrics="rubricsShare" :currentRubric="modalEvent ? modalEvent.currentRubric : null"/>
+
 
     <ConfirmModal v-show="isConfirmFavoriteModal" 
     :content="'Are you sure you want to bookmark ' + title + ' list?'"
@@ -197,7 +287,7 @@ export default {
       <template v-slot:main>
         <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="toggleNewTaskModal(rubric)">
           <template v-slot:tasks>
-            <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task"/>
+            <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task" @click="toggleTaskModal(task, rubric.id)" style="cursor: pointer;"/>
           </template>
         </KwRubric>
       </template>

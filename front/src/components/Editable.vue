@@ -30,7 +30,7 @@ export default {
         },
         value: {
             type: String,
-            default: "Test"
+            default: "Undefined"
         },
         size: {
             type: Number,
@@ -59,8 +59,8 @@ export default {
             }
 
             if(!this.editing) {
-                this.$emit('submit', this.value)
-                console.log(this.inputValue)
+                this.$emit('submit', this.inputValue)
+                console.log("editable : " + this.inputValue)
             }
         },
         resize() {        

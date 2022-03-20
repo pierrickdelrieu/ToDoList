@@ -30,26 +30,26 @@ export default {
           name: "Education",
           is_favorite: false,
           members: [
-        { id: 1, 
-          firstname: "Pierrick",
-          lastname:  "Delrieu",
-          mail: "pierrick.delrieu@efrei.net"
-        },
-        { id: 2, 
-          firstname: "Meric",
-          lastname:  "Chenu",
-          mail: "meric.chenu@efrei.net"
-        },
-        { id: 3, 
-          firstname: "Kais",
-          lastname:  "Zegdoud",
-          mail: "kais.zegdoud@efrei.net"
-        },
-        { id: 4, 
-          firstname: "Guillaume",
-          lastname:  "Dumas",
-          mail: "guillaume.dumas@efrei.net"
-        }],
+            { id: 1, 
+              firstname: "Pierrick",
+              lastname:  "Delrieu",
+              mail: "pierrick.delrieu@efrei.net"
+            },
+            { id: 2, 
+              firstname: "Meric",
+              lastname:  "Chenu",
+              mail: "meric.chenu@efrei.net"
+            },
+            { id: 3, 
+              firstname: "Kais",
+              lastname:  "Zegdoud",
+              mail: "kais.zegdoud@efrei.net"
+            },
+            { id: 4, 
+              firstname: "Guillaume",
+              lastname:  "Dumas",
+              mail: "guillaume.dumas@efrei.net"
+            }],
           number_of_task: 6
         },
         {
