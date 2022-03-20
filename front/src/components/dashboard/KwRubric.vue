@@ -1,22 +1,18 @@
 <script>
 import Editable from "@/components/Editable"
 
+
 export default {
   name: "KwRubric",
   components: { Editable },
   props: {
-    title: {
-      type: String,
-      default: "New rubrics"
-    },
-    id: {
-      type: Number
-    },
-    tasks: [
-      {
-        id: 1
-      }
-    ]
+    // title: {
+    //   type: String,
+    //   default: "New rubrics"
+    // },
+    rubric: {
+      required: true
+    }
   },
   methods: {
     showNewTaskModal() {
@@ -25,6 +21,9 @@ export default {
     updateTitle(e) {
       console.log(e)
       // call API
+    },
+    removeRubric() {
+      // CALL API
     }
   },
   computed: {
@@ -41,13 +40,14 @@ export default {
 
 <template>
   <div class="kw-rubric">
-    
-
     <div class="kw-rubric-header">
-      <Editable :value="title" @submit="updateTitle" name="Title-rubric" :size='20' :weight='500'/>
+      <Editable :value="rubric.name" @submit="updateTitle" name="Title-rubric" :size='20' :weight='500'/>
 
-<!--      <p>{{ numberOfTask }}</p>-->
-      <img src="../../assets/plus-circle-grey.svg" alt="Plus circle" @click="showNewTaskModal">
+      <div class="kw-rubric-header-logo">
+        <img src="../../assets/bin.svg" alt="Bin" style="margin-right: 30px; cursor: pointer;" @click="removeRubric" />
+        <img src="../../assets/plus-circle-grey.svg" alt="Plus circle" @click="showNewTaskModal">
+      </div>
+
     </div>
     <div class="kw-rubric-tasks">
       <slot name="tasks"></slot>
@@ -92,4 +92,11 @@ export default {
     flex-direction: column;
     align-items: center;
   }
+
+
+  .kw-rubric-header-logo {
+    display: flex;
+    align-items: center;
+  }
+
 </style>

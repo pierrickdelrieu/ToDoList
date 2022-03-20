@@ -253,7 +253,6 @@ export default {
     <TaskModal v-show="isTaskModal" @close="toggleTaskModal(null, null)" :members="members"
       :task="modalEvent ? modalEvent.task : null" :rubrics="rubricsShare" :currentRubric="modalEvent ? modalEvent.currentRubric : null"/>
 
-
     <ConfirmModal v-show="isConfirmFavoriteModal" 
     :content="'Are you sure you want to bookmark ' + title + ' list?'"
     @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
@@ -285,7 +284,7 @@ export default {
       </template>
 
       <template v-slot:main>
-        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :title="rubric.name" @showNewTaskModal="toggleNewTaskModal(rubric)">
+        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :rubric="rubric" @showNewTaskModal="toggleNewTaskModal(rubric)">
           <template v-slot:tasks>
             <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task" @click="toggleTaskModal(task, rubric.id)" style="cursor: pointer;"/>
           </template>
