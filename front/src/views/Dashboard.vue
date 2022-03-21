@@ -16,7 +16,8 @@ export default {
       isConfirmRemoveModal: false,
       isShareModal: false,
       listEvent: null,
-
+      todolists: null,
+      numberTaskGlobal: 0,
       lists: [
         {
           id: 1,
@@ -60,6 +61,16 @@ export default {
           number_of_task: 6
         }
       ]
+    }
+  },
+  mounted(){
+    console.log("localStorage : " + localStorage.getItem("todolists"))
+    if(JSON.parse(localStorage.getItem("todolists"))){
+        this.todolists = JSON.parse(localStorage.getItem("todolists")).todolist
+        for(let item = 0;item<this.todolists.length;item+=1){
+          this.numberTaskGlobal+=this.todolists[item].numberTasks
+          
+        }
     }
   },
   computed: {
@@ -138,8 +149,8 @@ export default {
       </template>
 
       <template v-slot:info>
-        <div class="dashboard-content-header-info-item"><h1>Number of lists</h1><p>{{ numberTotalOfList }}</p></div>
-        <div class="dashboard-content-header-info-item"><h1>Number of tasks</h1><p>{{ numberTotalOfTask }}</p></div>
+        <div class="dashboard-content-header-info-item"><h1>Number of lists</h1><p>{{ todolists.length }}</p></div>
+        <div class="dashboard-content-header-info-item"><h1>Number of tasks</h1><p>{{ numberTaskGlobal }}</p></div>
       </template>
 
       <template v-slot:main>
@@ -150,12 +161,12 @@ export default {
             <th>Members</th>
             <th></th>
           </tr>
-          <tr v-for="list in lists" :key="list.id" class="dashboard-table-row">
+          <tr v-for="list in todolists" :key="list.id_todolist" class="dashboard-table-row">
             <td>
-              <router-link :to="{ name: 'list', params: { id: list.id }}" class="dashboard-table-row-name">
+              <router-link :to="{ name: 'list', params: { id: list.id_todolist }}" class="dashboard-table-row-name">
                 {{ list.name }}
               </router-link></td>
-            <td>{{ list.number_of_task }}</td>
+            <td>{{ list.numberTasks }}</td>
             <td><div v-for="(member, index) in list.members" :key="index" class="dashboard-table-members">
               <p>{{ member.firstname[0].toUpperCase() }}{{ member.lastname[0].toUpperCase() }}</p>
             </div></td>

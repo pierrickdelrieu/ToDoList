@@ -61,15 +61,23 @@ export default {
       }  
         */
     login() {
-      this.$store
+       this.$store
         .dispatch("login", {
           email: this.email,
           password: this.password,
+        }).then(() => {
+          this.$store.dispatch("dashboardLists", {
+            id_user: JSON.parse(localStorage.getItem("user")).id_user
+          }).then(() => {
+            /*Before the redirection, we look at the token to see if the user is well connected */
+            if(localStorage.getItem("token")){
+              this.$router.push({
+                name: "dashboard"
+              });
+            }
+          })
         })
-        .then(() => {
-          this.$router.push({
-            name: "dashboard"});
-        });
+      
     },
   },
 };

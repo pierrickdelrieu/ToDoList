@@ -1,7 +1,10 @@
-const User = require("./User")
-const Rubric = require("./Rubric")
 module.exports = (sequelize, DataTypes) => {
     const ToDoList = sequelize.define("ToDoList", {
+        id_todolist: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         name: {
             type: DataTypes.STRING(50),
             unique: false
@@ -9,25 +12,27 @@ module.exports = (sequelize, DataTypes) => {
         is_favorite: {
             type: DataTypes.BOOLEAN,
             unique: false
-        },
-        id_user: {
-            type: DataTypes.INTEGER,
-        },
-        id_Rubric: {
-            type: DataTypes.INTEGER
         }
+    }, {
+        timestamps: false
+
+
     })
+
     ToDoList.associate = function (models) {
-        ToDoList.hasMany(models.User, {
-            constraints: false,
-            allowNull: false,
-            foreignKey: "id_user"
+        ToDoList.hasMany(models.Rubric, {
+            constaints: false,
+            allowNull: true,
+            foreignKey: "id_todolist"
         }),
-            ToDoList.hasMany(models.Rubric, {
+            ToDoList.hasMany(models.Have, {
                 constaints: false,
                 allowNull: true,
-                foreignKey: "id_Rubric"
+                foreignKey: "id_todolist",
+                defaultValue: null
             })
+
+
     }
     return ToDoList
 }

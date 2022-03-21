@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
      * https://sequelize.org/master/manual/model-basics.html
      */
     const User = sequelize.define("User", {
+        id_user: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
         firstname: {
             type: DataTypes.STRING(50),
             unique: false
@@ -61,11 +66,11 @@ module.exports = (sequelize, DataTypes) => {
         return bcrypt.compareAsync(password, this.password)
     }
     User.associate = function (models) {
-        User.hasMany(models.ToDoList, {
+        User.hasMany(models.Have, {
             constraints: false,
             allowNull: true,
             defaultValue: null,
-            foreignKey: "id_ToDoList"
+            foreignKey: "id_user"
         })
     }
 

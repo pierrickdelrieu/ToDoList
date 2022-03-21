@@ -13,6 +13,12 @@ const { sequelize } = require("./models")
 const config = require("./config/config")
 
 
+
+// Only requests coming from our front server will be accepted by the API
+const corsOptions = {
+    origin: 'http://localhost:8080'
+}
+
 const app = express();
 
 
@@ -20,7 +26,7 @@ app.use(morgan("combined"))
 
 //Allow express to parse any json request sent in
 app.use(bodyParser.json())
-app.use(cors())
+app.use(cors(corsOptions))
 
 require('./routes')(app)
 

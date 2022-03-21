@@ -1,23 +1,31 @@
 const Rubric = require("./Rubric")
 module.exports = (sequelize, DataTypes) => {
     const Task = sequelize.define("Task", {
+        id_task: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         name: {
             type: DataTypes.STRING(50),
             unique: false
         },
         description: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(500),
             unique: false
-        },
-        id_Rubric: {
-            type: DataTypes.INTEGER,
         }
-    })
+    },
+
+        {
+            /* Remove the timestamps (CreatedAt and UpdatedAt) from the model*/
+            timestamps: false
+
+        })
     Task.associate = function (models) {
-        Task.hasOne(models.Rubric, {
+        Task.belongsTo(models.Rubric, {
             constraints: false,
             allowNull: false,
-            foreignKey: "id_Rubric"
+            foreignKey: "id_rubric"
         })
     }
     return Task

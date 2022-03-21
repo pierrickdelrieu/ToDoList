@@ -86,12 +86,34 @@ export default {
     },
       async register(){
               try{
-                  await AuthenticationService.register({
+                  let response = await AuthenticationService.register({
                       firstname: this.firstname,
                       lastname: this.lastname,
                       email: this.email,
                       password: this.password
                   })
+                  /* If the user has been registered*/
+                  if(!response.data.error){
+                    this.$store
+                      .dispatch("login", {
+                        email: this.email,
+                        password: this.password,
+                      }).then(() => {
+                        this.$store.dispatch("dashboardLists", {
+                          id_user: response.data.user.id_user
+                        }).then(() => {
+                          if(localStorage.getItem("token")){
+                            this.$router.push({
+                              name: "dashboard"
+                            });
+                          }
+                        })
+                        /*Before the redirection, we look at the token to see if the user is well connected */
+                        
+                      })
+                  }
+
+                  
                   
               }
               catch(error){

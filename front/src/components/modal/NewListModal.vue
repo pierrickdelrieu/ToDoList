@@ -45,7 +45,18 @@ export default {
             this.$emit("close")
         },
         addList() {
-            console.log(this.isFavorite)
+            /* We create a new list*/
+            this.$store.dispatch("createNewList",{
+                name: this.name,
+                isfavorite: this.isFavorite,
+                id_user: JSON.parse(localStorage.getItem("user")).id_user
+            }).then(() => {
+                this.$store.dispatch("dashboardLists",{
+                    id_user: JSON.parse(localStorage.getItem("user")).id_user
+                }).then(() => {
+                    this.$router.go()
+                })
+            })
         }
     },
 

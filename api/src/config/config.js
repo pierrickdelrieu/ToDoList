@@ -17,7 +17,7 @@ module.exports = {
     db: {
         database: process.env.DB_NAME || 'todolistdb',
         user: process.env.DB_USER || 'root', /* You have to enter your database username*/
-        password: process.env.DB_PASS || '', /* You have to enter your database password */
+        password: process.env.DB_PASS || 'woofi51100', /* You have to enter your database password */
         options: {
             //database type
             dialect: process.env.DIALECT || 'mysql',

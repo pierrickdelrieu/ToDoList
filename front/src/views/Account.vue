@@ -33,26 +33,24 @@ export default {
   },
   methods: {
     updateAccount() {
-      console.log(this.firstname, this.lastname)
-      console.log(this.firstname.length, this.lastname.length)
-      // const lastnameInput = document.getElementById("account-lastname");
-      // const firstnameInput = document.getElementById("account-firstname");
-
-      // if(this.firstname.length == 0) {
-      //   firstnameInput.setCustomValidity('This field cannot be empty');
-      //   firstnameInput.reportValidity()
-      // } else if(this.lastname.length == 0) {
-      //   lastnameInput.setCustomValidity('This field cannot be empty');
-      //   lastnameInput.reportValidity()
-      // } else {
-      //   lastnameInput.setCustomValidity('');
-      //   firstnameInput.setCustomValidity('');
-
-
-      //   // CALL API
-      // }
+      this.$store.dispatch("updateUser", {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email
+      }).then(() => {
+        /* We force the component to reload itself*/
+        this.$router.go()
+        
+      })
+      
     }
   },
+  mounted(){
+    const userData = JSON.parse(localStorage.getItem("user"))
+    this.firstname = userData.firstname,
+    this.lastname = userData.lastname,
+    this.email = userData.email
+  }
 }
 </script>
 

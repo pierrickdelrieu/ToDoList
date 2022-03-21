@@ -7,9 +7,9 @@ export default {
     return {
       isNewListModal: false,
       displaySideBar: true,
-      user: {
-        firstname: "Pierrick",
-        lastname: "Delrieu"
+      userData : {
+        lastname: null,
+        firstname: null
       },
       lists: [
         {
@@ -60,14 +60,19 @@ export default {
       ]
     }
   },
+  created(){
+    const userData = JSON.parse(localStorage.getItem("user"))
+    this.userData.firstname = userData.firstname,
+    this.userData.lastname = userData.lastname
+  },
   computed: {
     fullName() {
-      return this.user.firstname.charAt(0).toUpperCase() + this.user.firstname.slice(1).toLowerCase() + ' ' +
-          this.user.lastname.charAt(0).toUpperCase() + this.user.lastname.slice(1).toLowerCase()
+      return this.userData.firstname.charAt(0).toUpperCase() + this.userData.firstname.slice(1).toLowerCase() + ' ' +
+          this.userData.lastname.charAt(0).toUpperCase() + this.userData.lastname.slice(1).toLowerCase()
     },
     initial() {
-      console.log("Initial : " + this.user.firstname.charAt(0).toUpperCase() + this.user.lastname.charAt(0).toUpperCase())
-      return this.user.firstname.charAt(0).toUpperCase() + this.user.lastname.charAt(0).toUpperCase()
+      console.log("Initial : " + this.userData.firstname.charAt(0).toUpperCase() + this.userData.lastname.charAt(0).toUpperCase())
+      return this.userData.firstname.charAt(0).toUpperCase() + this.userData.lastname.charAt(0).toUpperCase()
     }
   },
   methods: {
