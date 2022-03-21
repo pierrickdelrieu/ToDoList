@@ -26,7 +26,8 @@ module.exports = {
                             id_todolist: todolistelement[i].id_todolist,
                             name: todolistelement[i].name,
                             is_favorite: todolistelement[i].is_favorite,
-                            numberTasks: 0
+                            numberTasks: 0,
+                            member: null
                         })
                     }
 

@@ -5,6 +5,8 @@ import AuthenticationService from "../services/AuthenticationService"
 import DashboardService from "../services/DashboardService"
 import UserUpdateService from "../services/UserUpdateService"
 import NewListService from "../services/NewListService"
+import UpdateTodolistService from "../services/UpdateTodolistService"
+import DeleteTodolist from "../services/DeleteTodolistService"
 Vue.use(Vuex)
 
 const LOGIN = "LOGIN"
@@ -152,8 +154,26 @@ const store = new Vuex.Store({
           id_user: data.id_user
 
         })
-        console.log("response : " + response)
 
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async updateFavorite({ commit }, data) {
+      try {
+        const response = await UpdateTodolistService.post({
+          id_todolist: data.id_todolist,
+          is_favorite: data.is_favorite
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async deleteTodolist({ commit }, data) {
+      try {
+        const response = await DeleteTodolist.post({
+          id_todolist: data.id_todolist
+        })
       } catch (error) {
         console.log(error)
       }

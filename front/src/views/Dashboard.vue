@@ -113,13 +113,31 @@ export default {
     },
     addToFavorite() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
+      this.listEvent.is_favorite = !this.listEvent.is_favorite
       // update database with api call
-      this.listEvent = null;
+      console.log("is_favorite : " + this.listEvent.is_favorite)
+      this.$store.dispatch("updateFavorite", {
+        id_todolist: this.listEvent.id_todolist,
+        is_favorite: this.listEvent.is_favorite
+      }).then(() => {
+          this.$store.dispatch("dashboardLists",{
+            id_user: JSON.parse(localStorage.getItem("user")).id_user
+          })
+      })
     },
+    
     removeTask() {
       this.isConfirmRemoveModal = !this.isConfirmRemoveModal;
       // update database with api call
-      this.listEvent = null;
+      this.$store.dispatch("deleteTodolist", {
+        id_todolist: this.listEvent.id_todolist
+      }).then(() => {
+        this.$store.dispatch("dashboardLists", {
+          id_user: JSON.parse(localStorage.getItem("user")).id_user
+        }).then(() => {
+          this.$router.go()
+        })
+      })
     }
   },
 }

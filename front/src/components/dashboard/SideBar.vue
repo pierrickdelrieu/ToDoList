@@ -7,63 +7,22 @@ export default {
     return {
       isNewListModal: false,
       displaySideBar: true,
+      todolists: null,
       userData : {
         lastname: null,
         firstname: null
-      },
-      lists: [
-        {
-          id: 1,
-          name: "Kanban model",
-          is_favorite: true,
-          members: [
-            {
-              fistname: "Pierrick",
-              lastname: "Delrieu"
-            },
-            {
-              fistname: "Meric",
-              lastname: "Chenu"
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: "Education",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 3,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 4,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 5,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        },
-        {
-          id: 6,
-          name: "Travel",
-          is_favorite: false,
-          members: null
-        }
-      ]
+      }
+      
     }
   },
   created(){
     const userData = JSON.parse(localStorage.getItem("user"))
     this.userData.firstname = userData.firstname,
     this.userData.lastname = userData.lastname
+
+    if(JSON.parse(localStorage.getItem("todolists"))){
+        this.todolists = JSON.parse(localStorage.getItem("todolists")).todolist
+    }
   },
   computed: {
     fullName() {
@@ -126,11 +85,11 @@ export default {
 
 
         <div id="side-bar-list">
-          <div class="side-bar-list-item" v-for="item in lists" :key="item.id">
+          <div class="side-bar-list-item" v-for="item in todolists" :key="item.id_todolist">
             <img class="side-bar-list-item-img" style="cursor: pointer" v-show="item.is_favorite" src="../../assets/favorite.svg" alt="Is favorite task">
             <img class="side-bar-list-item-img" v-show="item.members" src="../../assets/team.svg" alt="Is shared task">
 
-            <router-link :to="{ name: 'list', params: { id: item.id }}" id="side-bar-list-item-name" exact-active-class="side-bar-active-link">
+            <router-link :to="{ name: 'list', params: { id: item.id_todolist }}" id="side-bar-list-item-name" exact-active-class="side-bar-active-link">
               <p>{{ item.name }}</p>
               <img id="side-bar-list-item-next" src="../../assets/go_to.svg" alt="Go to task">
             </router-link>

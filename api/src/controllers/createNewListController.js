@@ -3,6 +3,7 @@ const { User, Have, ToDoList } = require("../models")
 module.exports = {
     async createList(req, res) {
         const { name, is_favorite, id_user } = req.body
+
         try {
             console.log("fzeofezo")
             const todolist = ToDoList.create({
