@@ -48,110 +48,14 @@ export default {
           lastname:  "Dumas",
           mail: "guillaume.dumas@efrei.net"
         }],
-      rubrics: [
-        {
-          id: 1,
-          name: "Todo",
-          tasks: [
-            {
-              id: 1,
-              name: "Has to be done",
-              description: "Description de cette tache de merde",
-              date: null,
-              priority: 3,
-              members: [
-              { id: 1, 
-                firstname: "Pierrick",
-                lastname:  "Delrieu",
-                mail: "pierrick.delrieu@efrei.net"
-              },
-              { id: 2, 
-                firstname: "Meric",
-                lastname:  "Chenu",
-                mail: "meric.chenu@efrei.net"
-              },
-              { id: 3, 
-                firstname: "Kais",
-                lastname:  "Zegdoud",
-                mail: "kais.zegdoud@efrei.net"
-              },
-              { id: 4, 
-                firstname: "Guillaume",
-                lastname:  "Dumas",
-                mail: "guillaume.dumas@efrei.net"
-              }],
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: "Doing",
-          tasks: [
-            {
-              id: 2,
-              name: "Title of task",
-              description: "Description de",
-              date: '2022-04-03',
-              priority: null,
-              members:[
-                { id: 1, 
-                  firstname: "Pierrick",
-                  lastname:  "Delrieu",
-                  mail: "pierrick.delrieu@efrei.net"
-                },
-                { id: 2, 
-                  firstname: "Meric",
-                  lastname:  "Chenu",
-                  mail: "meric.chenu@efrei.net"
-                }],
-            },
-            {
-              id: 3,
-              name: "Title of task",
-              description: "Description de cette tache de merde",
-              date: '2022-04-03',
-              priority: 2,
-              members: null
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: "Done",
-          tasks: [
-            {
-              id: 4,
-              name: "Title of task",
-              description: "Description de cette tache de merde",
-              date: "2022-04-03",
-              priority: 2,
-              members: null
-            },
-            {
-              id: 5,
-              name: "Title of task",
-              description: "Description de cette tache de merde",
-              date: "2022-04-03",
-              priority: 2,
-              members: null
-            },
-            {
-              id: 6,
-              name: "Title of task",
-              description: "Description de cette tache de merde",
-              date: "2022-04-03",
-              priority: 3,
-              members: null
-            }
-          ]
-        }
-      ]
+      rubrics: []
     }
   },
   computed: {
     numberOfTask() {
       let sum = 0
       this.rubrics.forEach((rubric) => {
+        console.log("rubric.tasks : " + Object.keys(rubric.tasks))
         rubric.tasks.forEach(() => {
           sum ++
         })
@@ -170,6 +74,22 @@ export default {
 
       return rubrics;
     }
+  },
+  mounted(){
+    localStorage.removeItem("rubrics")
+    this.$store.dispatch("getRubrics",{
+      id_user : JSON.parse(localStorage.getItem("user")).id_user,
+      id_todolist: this.id
+    }).then(()  => {
+      this.rubrics = JSON.parse(localStorage.getItem("rubrics"))
+
+    })
+
+    /*
+    this.$store.dispatch("getRubrics",{
+      id_rubric: this.id
+    })
+    */
   },
   methods: {
     toggleNewTaskModal(rubric) {
@@ -204,36 +124,15 @@ export default {
       } else {
         this.modalEvent = null
       }
-      // console.log("1- " + this.modalEvent)
-
-      // if(task && rubric) {
-      //   // let rubrics = []
-      //   // this.rubrics.forEach((item) => {
-      //   //   rubrics.push({
-      //   //     id: item.id,
-      //   //     name: item.name
-      //   //   })
-      //   // })
-
-      //   // this.modalEvent = {
-      //   //   task : task,
-      //   //   currentRubric : {
-      //   //     id: rubric.id,
-      //   //     name: rubric.name
-      //   //   }
-      //   // }
-      //   this.modalEvent = task
-      // } else {
-      //   this.modalEvent = null
-      // }
-
-      // console.log(this.modalEvent)
+      
     },
     addToFavorite() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
       // update database with api call
     },
     updateTitle(e) {
+            console.log("id_rubric : " + this.id)
+
       this.title = e
       // console.log(this.title)
       // call API
@@ -284,7 +183,7 @@ export default {
       </template>
 
       <template v-slot:main>
-        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :rubric="rubric" @showNewTaskModal="toggleNewTaskModal(rubric)">
+        <KwRubric v-for="rubric in rubrics" :key="rubric.id" :rubric="rubric"  @showNewTaskModal="toggleNewTaskModal(rubric)">
           <template v-slot:tasks>
             <KwTask v-for="task in rubric.tasks" :key="task.id" :task="task" @click="toggleTaskModal(task, rubric.id)" style="cursor: pointer;"/>
           </template>

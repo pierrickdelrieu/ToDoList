@@ -7,6 +7,10 @@ import UserUpdateService from "../services/UserUpdateService"
 import NewListService from "../services/NewListService"
 import UpdateTodolistService from "../services/UpdateTodolistService"
 import DeleteTodolist from "../services/DeleteTodolistService"
+import GetRubrics from "../services/GetRubricsService"
+import CreateNewTask from "../services/CreateNewTaskService"
+import DeleteTask from "../services/DeleteTaskService"
+import CreateRubric from "../services/CreateRubricService"
 Vue.use(Vuex)
 
 const LOGIN = "LOGIN"
@@ -109,6 +113,7 @@ const store = new Vuex.Store({
     logout({ commit }) {
       localStorage.removeItem("token");
       localStorage.removeItem("todolists")
+      localStorage.removeItem("rubrics")
       commit(LOGOUT)
     },
 
@@ -173,6 +178,58 @@ const store = new Vuex.Store({
       try {
         const response = await DeleteTodolist.post({
           id_todolist: data.id_todolist
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getRubrics({ commit }, data) {
+      try {
+        const response = await GetRubrics.post({
+          id_user: data.id_user,
+          id_todolist: data.id_todolist
+        })
+        /* We store all the rubrics into the localStorage in order to load just once the rubrics while navigating 
+        through pages*/
+        localStorage.setItem("rubrics", JSON.stringify(response.data.rubrics))
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async createNewTask({ commit }, data) {
+      try {
+        const response = await CreateNewTask.post({
+
+          id_todolist: data.id_todolist,
+          rubric_name: data.rubric_name,
+          task_name: data.task_name,
+          task_description: data.task_description,
+          task_priority: data.task_priority,
+          id_user: JSON.parse(localStorage.getItem("user")).id_user,
+          task_date: data.task_date
+        })
+
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async removeTask({ commit }, data) {
+      try {
+
+        const response = await DeleteTask.post({
+          id_rubric: data.id_rubric
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async createRubric({ commit }, data) {
+      try {
+        const response = await CreateRubric.post({
+          id_todolist: data.id_todolist,
+          rubric_name: data.rubric_name
         })
       } catch (error) {
         console.log(error)

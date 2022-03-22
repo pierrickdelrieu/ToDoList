@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.STRING(500),
             unique: false
+        },
+        dateTask: {
+            type: DataTypes.DATE,
+            unique: false
+        },
+        priority: {
+            type: DataTypes.INTEGER,
+            unique: false
         }
     },
 

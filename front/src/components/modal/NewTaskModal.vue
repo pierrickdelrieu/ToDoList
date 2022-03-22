@@ -33,7 +33,22 @@ export default {
         },
         addTask() {
             // call API
-            console.log(this.name, this.description, this.date, this.priority, this.membersSelected)
+            this.$store.dispatch("createNewTask",{
+                id_todolist: this.$route.params.id,
+                rubric_name: this.rubric.name,
+                task_name: this.name,
+                task_date: this.date,
+                task_description: this.description,
+                task_priority: this.priority
+            }).then(() => {
+                localStorage.removeItem("rubrics")
+                this.$store.dispatch("getRubrics", {
+                    id_todolist: this.rubric.id,
+                    id_user: JSON.parse(localStorage.getItem("user")).id_user,
+                }).then(() => {
+                    this.$router.go()
+                })
+            })
         },
         updatePriority() {
             this.priority ++;

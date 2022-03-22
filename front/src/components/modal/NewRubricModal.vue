@@ -42,6 +42,18 @@ export default {
             this.$emit("close")
         },
         addRubic() {
+            this.$store.dispatch("createRubric",{
+                id_todolist: this.list.id,
+                rubric_name: this.name
+            }).then(() => {
+                localStorage.removeItem("rubrics")
+                this.$store.dispatch("getRubrics", {
+                    id_todolist: this.list.id,
+                    id_user: JSON.parse(localStorage.getItem("user")).id_user,
+                }).then(() => {
+                    this.$router.go()
+                })
+            })
         }
     },
 

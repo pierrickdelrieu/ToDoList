@@ -5,7 +5,6 @@ module.exports = {
         const { name, is_favorite, id_user } = req.body
 
         try {
-            console.log("fzeofezo")
             const todolist = ToDoList.create({
                 name: name,
                 is_favorite: is_favorite

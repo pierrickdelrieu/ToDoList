@@ -14,72 +14,72 @@ Vue.use(VueRouter)
 
 const isUserLoggedIn = store.getters["isUserLoggedIn"]
 const routes = [{
-        path: '/',
-        name: 'home',
-        component: Home
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: Login,
-        beforeEnter: (to, from, next) => {
-            if (localStorage.getItem("token") != null) {
-                next({ name: "dashboard" })
-            }
-            next()
+    path: '/',
+    name: 'home',
+    component: Home
+},
+{
+    path: '/login',
+    name: 'login',
+    component: Login,
+    beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("token") != null) {
+            next({ name: "dashboard" })
+        }
+        next()
 
+    }
+},
+{
+    path: '/register',
+    name: 'register',
+    component: Register,
+    beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("token") != null) {
+            next({ name: "dashboard" })
         }
-    },
-    {
-        path: '/register',
-        name: 'register',
-        component: Register,
-        beforeEnter: (to, from, next) => {
-            if (localStorage.getItem("token") != null) {
-                next({ name: "dashboard" })
-            }
-            next()
+        next()
+    }
+},
+{
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+    beforeEnter: (to, from, next) => {
+        console.log(store.getters.getUser)
+        console.log("Hello")
+        if (localStorage.getItem("token") == null) {
+            next({ name: "NotFound" })
         }
-    },
-    {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: Dashboard,
-        beforeEnter: (to, from, next) => {
-            console.log(store.getters.getUser)
-            console.log("Hello")
-            if (localStorage.getItem("token") == null) {
-                next({ name: "NotFound" })
-            }
-            next()
+        next()
+    }
+},
+{
+    path: '/dashboard/account',
+    name: 'account',
+    component: Account,
+    beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("token") == null) {
+            next({ name: "NotFound" })
         }
-    },
-    {
-        path: '/dashboard/account',
-        name: 'account',
-        component: Account,
-        beforeEnter: (to, from, next) => {
-            if (localStorage.getItem("token") == null) {
-                next({ name: "NotFound" })
-            }
-            next()
+        next()
+    }
+},
+{
+    path: '/dashboard/list/:id(\\d+)',
+    name: 'list',
+    props: true,
+    component: List,
+    beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("token") == null) {
+            next({ name: "NotFound" })
         }
-    },
-    {
-        path: '/dashboard/list/:id(\\d+)',
-        name: 'list',
-        props: true,
-        component: List,
-        beforeEnter: (to, from, next) => {
-            if (localStorage.getItem("token") == null) {
-                next({ name: "NotFound" })
-            }
-            next()
-        }
-    },
+        next()
+    }
+},
 
-    // will match everything and put it under `$route.params.pathMatch`
-    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+// will match everything and put it under `$route.params.pathMatch`
+{ path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 
     // will match anything starting with `/user-` and put it under `$route.params.afterUser`
     // { path: '/task-:afterTask(.*)', component: NotFound },

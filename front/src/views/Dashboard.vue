@@ -17,50 +17,8 @@ export default {
       isShareModal: false,
       listEvent: null,
       todolists: null,
-      numberTaskGlobal: 0,
-      lists: [
-        {
-          id: 1,
-          name: "Kanban model",
-          is_favorite: true,
-          members: null,
-          number_of_task: 6
-        },
-        {
-          id: 2,
-          name: "Education",
-          is_favorite: false,
-          members: [
-            { id: 1, 
-              firstname: "Pierrick",
-              lastname:  "Delrieu",
-              mail: "pierrick.delrieu@efrei.net"
-            },
-            { id: 2, 
-              firstname: "Meric",
-              lastname:  "Chenu",
-              mail: "meric.chenu@efrei.net"
-            },
-            { id: 3, 
-              firstname: "Kais",
-              lastname:  "Zegdoud",
-              mail: "kais.zegdoud@efrei.net"
-            },
-            { id: 4, 
-              firstname: "Guillaume",
-              lastname:  "Dumas",
-              mail: "guillaume.dumas@efrei.net"
-            }],
-          number_of_task: 6
-        },
-        {
-          id: 3,
-          name: "Travel",
-          is_favorite: true,
-          members: null,
-          number_of_task: 6
-        }
-      ]
+      numberTaskGlobal: 0
+      
     }
   },
   mounted(){

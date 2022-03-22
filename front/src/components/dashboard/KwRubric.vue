@@ -6,10 +6,7 @@ export default {
   name: "KwRubric",
   components: { Editable },
   props: {
-    // title: {
-    //   type: String,
-    //   default: "New rubrics"
-    // },
+    
     rubric: {
       required: true
     }
@@ -23,6 +20,11 @@ export default {
       // call API
     },
     removeRubric() {
+      this.$store.dispatch("removeTask", {
+        id_rubric: this.rubric.id
+      }).then(() => {
+        this.$router.go()
+      })
       // CALL API
     }
   },
