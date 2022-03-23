@@ -46,8 +46,6 @@ const routes = [{
     name: 'dashboard',
     component: Dashboard,
     beforeEnter: (to, from, next) => {
-        console.log(store.getters.getUser)
-        console.log("Hello")
         if (localStorage.getItem("token") == null) {
             next({ name: "NotFound" })
         }

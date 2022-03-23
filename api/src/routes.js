@@ -9,6 +9,7 @@ const getRubricsController = require("./controllers/getRubricsController")
 const CreateNewTaskController = require("./controllers/CreateNewTaskController")
 const DeleteTaskController = require("./controllers/DeleteTaskController")
 const CreateRubricController = require("./controllers/CreateRubricController")
+const RemoveTaskController = require("./controllers/RemoveTaskController")
 module.exports = (app) => {
     app.post('/register', AuthenticationControllerPolicy.register, AuthenticationController.register)
     app.post('/login', AuthenticationController.login)
@@ -21,6 +22,7 @@ module.exports = (app) => {
     app.post("/createNewTask", CreateNewTaskController.createNewTask)
     app.post("/deleteTask", DeleteTaskController.deleteTask)
     app.post("/createRubric", CreateRubricController.createRubric)
+    app.post("/removeTask", RemoveTaskController.removeTask)
 
 
 }

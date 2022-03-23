@@ -9,7 +9,8 @@ module.exports = {
             name: "",
             tasks: []
         }
-        let todolist, rubrics, tasks;
+
+        let todolist, rubrics;
         try {
             const having = await Have.findOne({
                 where: {
@@ -38,14 +39,6 @@ module.exports = {
                 /* objectRubric will contain 3 objects as rubrics, because we have 3 rubrics : ToDo doing and done*/
                 objectRubric = []
                 for (let index = 0; index < rubrics.length; index += 1) {
-                    let tasks = {
-                        id: null,
-                        name: "",
-                        description: "",
-                        date: null,
-                        priority: null,
-                        members: null
-                    }
                     /* We research in objectRubric if the focused rubric is allready in it. If not, we add
                     it in objectRubric*/
                     let indexObject = 0
@@ -63,6 +56,14 @@ module.exports = {
                             })
                             if (taskInstances) {
                                 for (let indexTask = 0; indexTask < taskInstances.length; indexTask += 1) {
+                                    let tasks = {
+                                        id: null,
+                                        name: "",
+                                        description: "",
+                                        date: null,
+                                        priority: null,
+                                        members: null
+                                    }
                                     tasks.id = taskInstances[indexTask].id_task
                                     tasks.name = taskInstances[indexTask].name
                                     tasks.description = taskInstances[indexTask].description
@@ -87,8 +88,16 @@ module.exports = {
                                 id_rubric: rubrics[index].id_rubric
                             }
                         })
-                        if (taskInstances) {
+                        if (taskInstances.length > 0) {
                             for (let indexTask = 0; indexTask < taskInstances.length; indexTask += 1) {
+                                tasks = {
+                                    id: null,
+                                    name: "",
+                                    description: "",
+                                    date: null,
+                                    priority: null,
+                                    members: null
+                                }
                                 tasks.id = taskInstances[indexTask].id_task
                                 tasks.name = taskInstances[indexTask].name
                                 tasks.description = taskInstances[indexTask].description
@@ -97,8 +106,15 @@ module.exports = {
                                 newObject.tasks.push(tasks)
                             }
                             objectRubric.push(newObject)
+
+
+                        }
+                        else {
+                            objectRubric.push(newObject)
+
                         }
                     }
+
                 }
             }
 

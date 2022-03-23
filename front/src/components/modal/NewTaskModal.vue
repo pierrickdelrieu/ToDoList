@@ -32,9 +32,10 @@ export default {
             this.$emit("close")
         },
         addTask() {
+            console.log("this.id_rubric : " + this.rubric.id)
             // call API
             this.$store.dispatch("createNewTask",{
-                id_todolist: this.$route.params.id,
+                id_rubric: this.rubric.id,
                 rubric_name: this.rubric.name,
                 task_name: this.name,
                 task_date: this.date,
@@ -47,6 +48,8 @@ export default {
                     id_user: JSON.parse(localStorage.getItem("user")).id_user,
                 }).then(() => {
                     this.$router.go()
+                    
+                    
                 })
             })
         },

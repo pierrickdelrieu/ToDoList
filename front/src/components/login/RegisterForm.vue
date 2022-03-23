@@ -19,7 +19,7 @@
     </div>
 
     <SubmitButton content="Sign Up" />
-
+    <p v-if="error">{{error}}</p>
     <Link link="/login" content="You already have an account?" strong="Login"/>
   </form>
 </template>
@@ -39,7 +39,8 @@ export default {
       lastname: "",
       email: "",
       password: "",
-      levelSecurityPassword: 0
+      levelSecurityPassword: 0,
+      error: null
     }
   },
   methods:{
@@ -111,6 +112,9 @@ export default {
                         /*Before the redirection, we look at the token to see if the user is well connected */
                         
                       })
+                  }
+                  else{
+                    this.error = response.data.error
                   }
 
                   

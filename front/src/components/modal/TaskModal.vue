@@ -170,7 +170,24 @@ export default {
         },
         removeTask() {
             // CALL API
-            this.$emit("close")
+            
+            this.$store.dispatch("removeTask",{
+                id_task: this.task.id
+            }).then(() => {
+                if(localStorage.getItem("rubrics")){
+                    localStorage.removeItem("rubrics")
+                }
+                
+                this.$store.dispatch("getRubrics", {
+                id_todolist: this.$route.params.id,
+                id_user: JSON.parse(localStorage.getItem("user")).id_user,
+                }).then(() => {
+                    this.$router.go()
+                }).then(() => {
+                    this.$emit("close")
+                })
+            })
+            
         }
     }
 }

@@ -11,6 +11,7 @@ import GetRubrics from "../services/GetRubricsService"
 import CreateNewTask from "../services/CreateNewTaskService"
 import DeleteTask from "../services/DeleteTaskService"
 import CreateRubric from "../services/CreateRubricService"
+import RemoveTask from "../services/RemoveTaskService"
 Vue.use(Vuex)
 
 const LOGIN = "LOGIN"
@@ -87,6 +88,7 @@ const store = new Vuex.Store({
           email: creds.email,
           password: creds.password
         })
+
         store.commit("set_user", {
           id_user: response.data.user.id_user,
           email: response.data.user.email,
@@ -99,7 +101,7 @@ const store = new Vuex.Store({
 
       } catch (error) {
         /*this.error = error.response.data.error*/
-        console.log(error)
+        return error.response.data.error
       }
 
       /*
@@ -125,7 +127,6 @@ const store = new Vuex.Store({
         localStorage.setItem("todolists", JSON.stringify((response.data)))
 
         const todolists = JSON.parse(localStorage.getItem("todolists"))
-        console.log("todolists : " + todolists)
       }
       catch (error) {
         console.log(error)
@@ -198,9 +199,10 @@ const store = new Vuex.Store({
     },
     async createNewTask({ commit }, data) {
       try {
+
         const response = await CreateNewTask.post({
 
-          id_todolist: data.id_todolist,
+          id_rubric: data.id_rubric,
           rubric_name: data.rubric_name,
           task_name: data.task_name,
           task_description: data.task_description,
@@ -230,6 +232,15 @@ const store = new Vuex.Store({
         const response = await CreateRubric.post({
           id_todolist: data.id_todolist,
           rubric_name: data.rubric_name
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async removeTask({ commit }, data) {
+      try {
+        const response = await RemoveTask.post({
+          id_task: data.id_task
         })
       } catch (error) {
         console.log(error)

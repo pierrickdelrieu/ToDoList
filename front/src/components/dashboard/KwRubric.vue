@@ -20,10 +20,13 @@ export default {
       // call API
     },
     removeRubric() {
+      console.log("id_rubric : " + this.rubric.id)
       this.$store.dispatch("removeTask", {
         id_rubric: this.rubric.id
       }).then(() => {
+        
         this.$router.go()
+        
       })
       // CALL API
     }

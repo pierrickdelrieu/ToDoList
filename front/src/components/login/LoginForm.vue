@@ -15,7 +15,7 @@
     <a href="" id="forgot-password">Forgot password?</a>
 
     <SubmitButton content="Sign In" />
-
+    <p v-if="error">{{error}}</p> 
     <Link
       link="/register"
       content="Don’t have an account yet?"
@@ -38,34 +38,20 @@ export default {
     return {
       email: "",
       password: "",
+      error: null
     };
   },
   methods: {
-    /*
-      async login() {
-        
-      try{
-        const response = await AuthenticationService.login({
-          email: this.email,
-          password: this.password
-        })
-        this.$store.dispatch('setToken',response.data.token)
-        this.$store.dispatch('setUser',response.data.user)
-        this.$router.replace({name: "dashboard"})
-      }
-      catch(error){
-        this.error = error.response.data.error
-        console.log(this.error)
-      }
-         
-      }  
-        */
     login() {
-       this.$store
-        .dispatch("login", {
-          email: this.email,
-          password: this.password,
-        }).then(() => {
+      this.$store
+      .dispatch("login", {
+        email: this.email,
+        password: this.password,
+      }).then((response) => {
+        if(!localStorage.getItem("token")){
+          this.error = response
+        }
+        else{
           this.$store.dispatch("dashboardLists", {
             id_user: JSON.parse(localStorage.getItem("user")).id_user
           }).then(() => {
@@ -76,7 +62,9 @@ export default {
               });
             }
           })
-        })
+        }
+        
+      })
       
     },
   },
