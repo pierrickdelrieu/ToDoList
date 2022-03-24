@@ -89,7 +89,7 @@ export default {
             <img class="side-bar-list-item-img" style="cursor: pointer" v-show="item.is_favorite" src="../../assets/favorite.svg" alt="Is favorite task">
             <img class="side-bar-list-item-img" v-show="item.members" src="../../assets/team.svg" alt="Is shared task">
 
-            <router-link :to="{ name: 'list', params: { id: item.id_todolist }}" id="side-bar-list-item-name" exact-active-class="side-bar-active-link">
+            <router-link :to="{ name: 'list', params: { id: item.id_todolist,todolistName: item.name }}" id="side-bar-list-item-name" exact-active-class="side-bar-active-link">
               <p>{{ item.name }}</p>
               <img id="side-bar-list-item-next" src="../../assets/go_to.svg" alt="Go to task">
             </router-link>

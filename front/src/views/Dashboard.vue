@@ -80,7 +80,9 @@ export default {
       }).then(() => {
           this.$store.dispatch("dashboardLists",{
             id_user: JSON.parse(localStorage.getItem("user")).id_user
-          })
+          }).then(() => {
+          this.$router.go()
+        })
       })
     },
     
@@ -139,7 +141,7 @@ export default {
           </tr>
           <tr v-for="list in todolists" :key="list.id_todolist" class="dashboard-table-row">
             <td>
-              <router-link :to="{ name: 'list', params: { id: list.id_todolist }}" class="dashboard-table-row-name">
+              <router-link :to="{ name: 'list', params: { id: list.id_todolist}}" class="dashboard-table-row-name">
                 {{ list.name }}
               </router-link></td>
             <td>{{ list.numberTasks }}</td>

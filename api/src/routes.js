@@ -7,9 +7,10 @@ const UpdateFavorite = require("./controllers/UpdateFavoriteController")
 const DeleteTodolist = require("./controllers/DeleteTodolistController")
 const getRubricsController = require("./controllers/getRubricsController")
 const CreateNewTaskController = require("./controllers/CreateNewTaskController")
-const DeleteTaskController = require("./controllers/DeleteTaskController")
+const DeleteRubricController = require("./controllers/DeleteRubricController")
 const CreateRubricController = require("./controllers/CreateRubricController")
 const RemoveTaskController = require("./controllers/RemoveTaskController")
+const UpdateTaskController = require("./controllers/UpdateTaskController")
 module.exports = (app) => {
     app.post('/register', AuthenticationControllerPolicy.register, AuthenticationController.register)
     app.post('/login', AuthenticationController.login)
@@ -20,9 +21,10 @@ module.exports = (app) => {
     app.post("/deleteTodolist", DeleteTodolist.deleteTodo)
     app.post("/getrubrics", getRubricsController.getRubrics)
     app.post("/createNewTask", CreateNewTaskController.createNewTask)
-    app.post("/deleteTask", DeleteTaskController.deleteTask)
+    app.post("/deleteRubric", DeleteRubricController.deleteRubric)
     app.post("/createRubric", CreateRubricController.createRubric)
     app.post("/removeTask", RemoveTaskController.removeTask)
+    app.post("/updateTask", UpdateTaskController.updateTask)
 
 
 }

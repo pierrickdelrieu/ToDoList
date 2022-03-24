@@ -21,11 +21,12 @@ export default {
     },
     removeRubric() {
       console.log("id_rubric : " + this.rubric.id)
-      this.$store.dispatch("removeTask", {
+      this.$store.dispatch("removeRubric", {
         id_rubric: this.rubric.id
       }).then(() => {
         
         this.$router.go()
+       
         
       })
       // CALL API

@@ -7,14 +7,14 @@ import NewRubricModal from "@/components/modal/NewRubricModal";
 import ConfirmModal from '@/components/modal/ConfirmModal';
 import ShareModal from '@/components/modal/ShareModal';
 import Loading from '@/components/Loading';
-import Editable from '@/components/Editable';
+// import Editable from '@/components/Editable';
 import TaskModal from '@/components/modal/TaskModal';
 
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "List",
-  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal, Loading, Editable, TaskModal },
+  components: { KwTask, KwRubric, DashboardContent, NewTaskModal, NewRubricModal, ConfirmModal, ShareModal, Loading, TaskModal },
   props:['id'],
   data() {
     return {
@@ -24,8 +24,7 @@ export default {
       isShareModal: false,
       isTaskModal: false,
       modalEvent: '',
-
-      title: "Kanban Model",
+      title: "",
       is_favorite: false,
       members: [
         { id: 1, 
@@ -75,14 +74,27 @@ export default {
       return rubrics;
     }
   },
+  watch: {
+    /* When the id in the url change, we reload the component*/
+    $route(to,from){
+      if(to !== from){
+        location.reload()
+        // this.$router.go()
+        //this.$router.push({ name: 'list', params: { id: this.id } })
+      }
+    }
+  },
   mounted(){
+    
     localStorage.removeItem("rubrics")
     this.$store.dispatch("getRubrics",{
       id_user : JSON.parse(localStorage.getItem("user")).id_user,
       id_todolist: this.id
     }).then(()  => {
-      this.rubrics = JSON.parse(localStorage.getItem("rubrics"))
-
+      this.rubrics = JSON.parse(localStorage.getItem("rubrics")).rubrics
+      this.title = JSON.parse(localStorage.getItem("rubrics")).name
+      this.is_favorite = JSON.parse(localStorage.getItem("rubrics")).isFavorite
+     
     })
 
     /*
@@ -129,9 +141,22 @@ export default {
     addToFavorite() {
       this.isConfirmFavoriteModal = !this.isConfirmFavoriteModal;
       // update database with api call
+
+      this.$store.dispatch("updateFavorite", {
+        id_todolist: this.id,
+        is_favorite: !this.is_favorite
+      }).then(() => {
+          this.$store.dispatch("dashboardLists",{
+            id_user: JSON.parse(localStorage.getItem("user")).id_user
+          }).then(() => {
+            
+          this.$router.go()
+          
+         console.log("dzhiodzi")
+        })
+      })
     },
     updateTitle(e) {
-            console.log("id_rubric : " + this.id)
 
       this.title = e
       // console.log(this.title)
@@ -153,7 +178,7 @@ export default {
       :task="modalEvent ? modalEvent.task : null" :rubrics="rubricsShare" :currentRubric="modalEvent ? modalEvent.currentRubric : null"/>
 
     <ConfirmModal v-show="isConfirmFavoriteModal" 
-    :content="'Are you sure you want to bookmark ' + title + ' list?'"
+    :content="'Are you sure you want to bookmark ' + this.title + ' list?'"
     @cancel="toggleConfirmFavoriteModal" @confirm="addToFavorite"/>
 
     <ShareModal v-show="isShareModal" @close="toggleShareModal" :list="{id: id, name: title, members: members}"/>
@@ -164,8 +189,8 @@ export default {
       </template>
 
       <template v-slot:title>
-        <!-- {{ title }} {{ id }} -->
-        <Editable :value="title" @submit="updateTitle" name="Title" :size='36' :weight='500'/>
+        {{ title }}
+        <!-- <Editable :value="title" @submit="updateTitle" name="Title" :size='36' :weight='500'/> -->
       </template>
 
       <template v-slot:logo>

@@ -53,6 +53,7 @@ export default {
     },
     computed: {
         hasChanged() {
+            console.log("zdjoifzjifz")
             // console.log(this._data)
             for(let i in this._data){
                 // console.log(this._data[i]);
@@ -65,7 +66,6 @@ export default {
     },
     methods: {
         close() {
-            console.log(this.hasChanged)
             if(this.hasChanged) {
                 if(this.dateConfirm()) {
                     this.updateTask()
@@ -91,17 +91,66 @@ export default {
             this.description.content = e
             console.log('3 - ' + this.description.content)
         },
+        updateRubric(rubric) {
+            this.rubric.updated = true
+            this.rubric.content = rubric
+9        },
         updateTask() {
             // // call API
             // this.$router.go();
+            /*eslint-disable*/
+            let name = this.task.name
+            let description = this.task.description
+            let date = this.task.date
+            let priority = this.task.priority
+            let rubric = this.currentRubric
+            let membersSelected = this.members
 
-            console.log(this.task)
-            console.log(this.name.updated ? this.name.content : this.task.name, 
-                        this.description.updated ? this.description.content : this.task.description, 
-                        this.date.updated ? this.date.content : this.task.date, 
-                        this.priority.updated ? this.priority.content : this.task.priority, 
-                        this.rubric.updated ? this.rubric.content : this.currentRubric, 
-                        this.membersSelected.updated ? this.membersSelected.content : this.members)
+            // this.name.updated ? this.name.content : this.task.name
+            // this.description.updated ? this.description.content : this.task.description, 
+            // this.date.updated ? this.date.content : this.task.date, 
+            // this.priority.updated ? this.priority.content : this.task.priority, 
+            // this.rubric.updated ? this.rubric.content : this.currentRubric, 
+            // this.membersSelected.updated ? this.membersSelected.content : this.members
+
+            if(this.name.updated){
+                name = this.name.content
+            }
+            if(this.description.updated){
+                description = this.description.content
+            }
+        
+            if(this.date.updated){
+                date = this.task.date
+            }
+            if(this.priority.updated){
+                priority = this.task.priority
+            }
+             if(this.rubric.updated){
+                rubric = this.rubric.content
+            }
+            if(this.membersSelected.updated){
+                membersSelected = this.membersSelected.content
+            }
+            
+            this.$store.dispatch("updateTask",{
+                id_task: this.task.id,
+                name: name,
+                description: description,
+                date: date,
+                priority: priority,
+                rubric: rubric
+            }).then(() => {
+                
+                this.$router.go()
+                /*
+               console.log("fhfei")
+               */
+            })
+            
+            
+
+                        
         },
         updatePriority() {
             this.priority.updated = true
@@ -235,7 +284,7 @@ export default {
 
 
                 <div id="taskModal-footer-left">
-                    <select id="taskModal-rubrics">
+                    <select id="taskModal-rubrics" @change="updateRubric($event.target.value)">
                         <option v-for="rubric in rubrics" :key="rubric.id" :value="rubric.id" :selected="(rubric.id == currentRubric) ? true : false">{{ rubric.name }}</option>                
                     </select>
 

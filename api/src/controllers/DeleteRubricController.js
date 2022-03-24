@@ -1,8 +1,7 @@
 const { Rubric, Task } = require("../models")
 
 module.exports = {
-    async deleteTask(req, res) {
-        console.log("fjezfjzefeo")
+    async deleteRubric(req, res) {
         const { id_rubric } = req.body
         try {
             const task = Task.destroy({

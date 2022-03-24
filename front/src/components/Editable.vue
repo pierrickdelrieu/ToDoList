@@ -10,7 +10,7 @@
 
     <div v-else @click="toggleEditing" class="editable-content"
         :style="'font-size: ' + size + 'px;' + 'font-weight: ' + weight + ';'">
-    {{ inputValue }}</div>
+    {{ value }}</div>
     
   </div>
 </template>
@@ -49,6 +49,7 @@ export default {
     },
     methods: {
         toggleEditing() {
+            console.log(this.inputValue)
             const input = document.getElementById('editable-' + this.name.toLowerCase());
 
             if((0 < this.inputValue.length) && (this.inputValue.length <= 30)) {

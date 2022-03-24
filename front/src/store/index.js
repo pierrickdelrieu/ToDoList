@@ -9,9 +9,10 @@ import UpdateTodolistService from "../services/UpdateTodolistService"
 import DeleteTodolist from "../services/DeleteTodolistService"
 import GetRubrics from "../services/GetRubricsService"
 import CreateNewTask from "../services/CreateNewTaskService"
-import DeleteTask from "../services/DeleteTaskService"
 import CreateRubric from "../services/CreateRubricService"
 import RemoveTask from "../services/RemoveTaskService"
+import UpdateTask from "../services/UpdateTaskService"
+import DeleteRubric from "../services/DeleteRubricService"
 Vue.use(Vuex)
 
 const LOGIN = "LOGIN"
@@ -192,7 +193,7 @@ const store = new Vuex.Store({
         })
         /* We store all the rubrics into the localStorage in order to load just once the rubrics while navigating 
         through pages*/
-        localStorage.setItem("rubrics", JSON.stringify(response.data.rubrics))
+        localStorage.setItem("rubrics", JSON.stringify(response.data))
       } catch (error) {
         console.log(error)
       }
@@ -217,10 +218,9 @@ const store = new Vuex.Store({
         console.log(error)
       }
     },
-    async removeTask({ commit }, data) {
+    async removeRubric({ commit }, data) {
       try {
-
-        const response = await DeleteTask.post({
+        const response = await DeleteRubric.post({
           id_rubric: data.id_rubric
         })
       } catch (error) {
@@ -241,6 +241,20 @@ const store = new Vuex.Store({
       try {
         const response = await RemoveTask.post({
           id_task: data.id_task
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async updateTask({ commit }, data) {
+      try {
+        const response = await UpdateTask.post({
+          id_task: data.id_task,
+          name: data.name,
+          description: data.description,
+          date: data.date,
+          priority: data.priority,
+          rubric: data.rubric
         })
       } catch (error) {
         console.log(error)

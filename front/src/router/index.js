@@ -68,6 +68,7 @@ const routes = [{
     name: 'list',
     props: true,
     component: List,
+
     beforeEnter: (to, from, next) => {
         if (localStorage.getItem("token") == null) {
             next({ name: "NotFound" })

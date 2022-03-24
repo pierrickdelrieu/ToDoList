@@ -120,6 +120,8 @@ module.exports = {
 
             res.status(201).send({
                 rubrics: objectRubric,
+                name: todolistJson.name,
+                isFavorite: todolistJson.is_favorite,
                 message: "The request has been received"
             })
         } catch (error) {
