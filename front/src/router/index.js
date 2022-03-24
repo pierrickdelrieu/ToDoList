@@ -91,20 +91,5 @@ const router = new VueRouter({
 })
 
 
-/*
-router.beforeEach((to, from, next) => {
 
-  if (to.name == "login") {
-    if (isUserLoggedIn) {
-      console.log("Hello")
-      next({ name: "dashboard" })
-    }
-    next()
-  }
-  next()
-
-
-
-})
-*/
 export default router

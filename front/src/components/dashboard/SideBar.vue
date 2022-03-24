@@ -30,7 +30,6 @@ export default {
           this.userData.lastname.charAt(0).toUpperCase() + this.userData.lastname.slice(1).toLowerCase()
     },
     initial() {
-      console.log("Initial : " + this.userData.firstname.charAt(0).toUpperCase() + this.userData.lastname.charAt(0).toUpperCase())
       return this.userData.firstname.charAt(0).toUpperCase() + this.userData.lastname.charAt(0).toUpperCase()
     }
   },
@@ -44,7 +43,6 @@ export default {
       }
     },
     logout: function(){
-      console.log("logout")
       this.$store.dispatch("logout")
     },
     showModal() {

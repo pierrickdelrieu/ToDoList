@@ -53,10 +53,8 @@ export default {
     },
     computed: {
         hasChanged() {
-            console.log("zdjoifzjifz")
-            // console.log(this._data)
+          
             for(let i in this._data){
-                // console.log(this._data[i]);
                 if(this._data[i].updated) {
                     return true
                 }
@@ -79,17 +77,14 @@ export default {
         updateName(e) {
             this.name.updated = true
             this.name.content = e
-            console.log('3 - ' + this.name.content)
         },
         updateDate(e) {
             this.date.updated = true
             this.date.content = e
-            console.log('3 - ' + this.date.content)
         },
         updateDescription(e) {
             this.description.updated = true
             this.description.content = e
-            console.log('3 - ' + this.description.content)
         },
         updateRubric(rubric) {
             this.rubric.updated = true
@@ -143,9 +138,7 @@ export default {
             }).then(() => {
                 
                 this.$router.go()
-                /*
-               console.log("fhfei")
-               */
+               
             })
             
             

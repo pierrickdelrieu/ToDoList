@@ -55,7 +55,6 @@ export default {
         },
         share() {
             // call API
-            console.log(this.email)
         }
     },
 

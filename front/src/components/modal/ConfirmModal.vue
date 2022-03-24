@@ -28,31 +28,6 @@ export default {
             default: ""
         }
     },
-    // created() {
-    //     // window.addEventListener('keyup', (e) => {
-    //     // if (e.key == 'Enter') {
-    //     //     // console.log("ok")
-    //     //     this.$emit("confirm")
-    //     // }
-    //     // });
-    //     console.log("created")
-    // },
-    // mounted() {
-    //     console.log("mounted")
-    // },
-    // unmounted() {
-    //     console.log("unmounted")
-    // },
-    // destroyed() {
-    //     console.log("destroyed")
-    // },
-
-    // updated() {
-    //     console.log("updated")
-    // },
-    // beforeUpdate() {
-    //     window.removeEventListener('keydown')
-    // },
     data() {
         return {
             name: "",
@@ -65,7 +40,6 @@ export default {
         },
         confirm() {
             this.$emit("confirm")
-            console.log("ok2")
         }
     },
     // beforeCreate() {

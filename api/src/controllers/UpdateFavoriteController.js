@@ -4,7 +4,6 @@ module.exports = {
     async updateFavorite(req, res) {
         const { id_todolist, is_favorite } = req.body
         try {
-            console.log("id_todolist : " + id_todolist + " is_favorite : " + is_favorite)
             const todolist = ToDoList.update({
                 is_favorite: is_favorite
             }, {

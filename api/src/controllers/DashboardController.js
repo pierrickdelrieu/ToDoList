@@ -36,7 +36,6 @@ module.exports = {
             }
             if (todolistarray.length != 0) {
                 for (let i = 0; i < todolistarray.length; i++) {
-                    console.log("id : " + todolistarray[i].id_todolist)
                     const rubric = await Rubric.findAll({
                         raw: true,
                         where: {
@@ -45,7 +44,6 @@ module.exports = {
                     })
                     let numberTasks = 0;
                     if (rubric.length != 0) {
-                        console.log("length : " + rubric.length)
 
                         for (let l = 0; l < rubric.length; l++) {
 
@@ -59,7 +57,6 @@ module.exports = {
 
 
                         }
-                        console.log("numberTask :  " + numberTasks)
 
 
 

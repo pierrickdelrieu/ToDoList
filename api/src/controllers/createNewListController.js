@@ -13,7 +13,6 @@ module.exports = {
                 in order to access the data*/
 
                 todolistJson = JSON.parse(JSON.stringify(todolist))
-                console.log("todolistJson : " + todolistJson.id_todolist)
                 const have = Have.create({
                     id_user: id_user,
                     id_todolist: todolistJson.id_todolist

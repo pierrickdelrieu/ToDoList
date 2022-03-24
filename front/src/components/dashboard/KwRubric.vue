@@ -1,4 +1,5 @@
 <script>
+/*eslint-disable*/
 import Editable from "@/components/Editable"
 
 
@@ -16,11 +17,9 @@ export default {
       this.$emit("showNewTaskModal")
     },
     updateTitle(e) {
-      console.log(e)
       // call API
     },
     removeRubric() {
-      console.log("id_rubric : " + this.rubric.id)
       this.$store.dispatch("removeRubric", {
         id_rubric: this.rubric.id
       }).then(() => {

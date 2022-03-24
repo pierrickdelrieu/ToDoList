@@ -54,7 +54,6 @@ export default {
     numberOfTask() {
       let sum = 0
       this.rubrics.forEach((rubric) => {
-        console.log("rubric.tasks : " + Object.keys(rubric.tasks))
         rubric.tasks.forEach(() => {
           sum ++
         })
@@ -152,14 +151,12 @@ export default {
             
           this.$router.go()
           
-         console.log("dzhiodzi")
         })
       })
     },
     updateTitle(e) {
 
       this.title = e
-      // console.log(this.title)
       // call API
     }
   },

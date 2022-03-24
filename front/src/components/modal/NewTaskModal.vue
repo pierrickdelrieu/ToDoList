@@ -32,7 +32,6 @@ export default {
             this.$emit("close")
         },
         addTask() {
-            console.log("this.id_rubric : " + this.rubric.id)
             // call API
             this.$store.dispatch("createNewTask",{
                 id_rubric: this.rubric.id,
@@ -72,10 +71,7 @@ export default {
         },
         dateConfirm() {
             let input = moment(this.date);
-            // console.log(moment().format("YYYY MM DD"), moment().toDate().getTime())
-            // console.log(input.format("YYYY MM DD"), input.toDate().getTime())
-            // console.log(moment(input, "YYYYMMDD").isSameOrAfter(moment().format("YYYYMMDD")))
-
+            
             let dateInput = document.getElementById("new-task-form-date");
 
             if (this.date != null) {

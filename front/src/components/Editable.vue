@@ -49,7 +49,6 @@ export default {
     },
     methods: {
         toggleEditing() {
-            console.log(this.inputValue)
             const input = document.getElementById('editable-' + this.name.toLowerCase());
 
             if((0 < this.inputValue.length) && (this.inputValue.length <= 30)) {
@@ -61,7 +60,6 @@ export default {
 
             if(!this.editing) {
                 this.$emit('submit', this.inputValue)
-                console.log("editable : " + this.inputValue)
             }
         },
         resize() {        
